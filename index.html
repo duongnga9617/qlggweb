@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HỆ THỐNG QUẢN LÝ TỔNG HỢP - BMK CENTER</title>
+    <title>BMK CENTER - QUẢN LÝ NGHIỆP VỤ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root { --bg: #0f1416; --card: #1c252a; --text: #e1e8eb; --accent: #00a8ff; --green: #2ecc71; }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; }
         .sidebar { background: var(--card); border-right: 1px solid #333; width: 250px; height: 100vh; position: fixed; padding: 20px 15px; }
         .main-view { margin-left: 250px; padding: 30px; width: calc(100% - 250px); min-height: 100vh; }
-        .nav-link { color: #95a5a6; padding: 12px; margin-bottom: 8px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: 500; }
+        .nav-link { color: #95a5a6; padding: 12px; margin-bottom: 8px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: 500; text-decoration: none; display: block; }
         .nav-link:hover, .nav-link.active { background: var(--accent); color: white; }
         .module-page { display: none; background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #444; }
-        .module-page.active { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+        .module-page.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .field-wrapper { display: none; margin-bottom: 12px; }
         .form-label { font-size: 11px; color: var(--accent); font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
         .form-control { background: #263238; border: 1px solid #37474f; color: white; font-size: 14px; }
         .form-control:focus { background: #37474f; color: white; border-color: var(--accent); box-shadow: none; }
-        .section-header { color: var(--green); border-bottom: 1px solid #37474f; padding-bottom: 5px; margin: 20px 0 15px 0; font-weight: bold; font-size: 14px; }
-        #preview-img { max-width: 100%; border: 4px solid #111; border-radius: 10px; margin-top: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .section-header { color: var(--green); border-bottom: 1px solid #37474f; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; font-size: 13px; }
+        #preview-img { max-width: 100%; border: 2px solid #555; border-radius: 8px; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -28,21 +28,21 @@
 <div class="sidebar">
     <h4 class="text-center text-warning mb-4">BMK CENTER</h4>
     <div class="nav flex-column">
-        <div class="nav-link active" onclick="switchTab('home')">🏠 TRANG CHỦ</div>
-        <div class="nav-link" onclick="switchTab('ghep-anh')">🖼️ GHÉP ẢNH (3.0)</div>
-        <div class="nav-link" onclick="switchTab('data-form', 'LẬP HỒ SƠ', 'Laphs.xlsm')">📝 LẬP HỒ SƠ</div>
-        <div class="nav-link" onclick="switchTab('data-form', 'CHUYỂN TRẠI', 'Chuyentrai.xlsm')">🚚 CHUYỂN TRẠI</div>
-        <div class="nav-link" onclick="switchTab('data-form', 'THI HÀNH ÁN', 'THA.xlsm')">⚖️ THI HÀNH ÁN</div>
+        <a class="nav-link active" href="#" onclick="switchTab('home')">🏠 TRANG CHỦ</a>
+        <a class="nav-link" href="#" onclick="switchTab('ghep-anh')">🖼️ GHÉP ẢNH</a>
+        <a class="nav-link" href="#" onclick="switchTab('data-form', 'LẬP HỒ SƠ', 'Laphs.xlsm')">📝 LẬP HỒ SƠ</a>
+        <a class="nav-link" href="#" onclick="switchTab('data-form', 'CHUYỂN TRẠI', 'Chuyentrai.xlsm')">🚚 CHUYỂN TRẠI</a>
+        <a class="nav-link" href="#" onclick="switchTab('data-form', 'THI HÀNH ÁN', 'THA.xlsm')">⚖️ THI HÀNH ÁN</a>
     </div>
 </div>
 
 <div class="main-view">
     <div id="home" class="module-page active">
-        <h2>HỆ THỐNG QUẢN LÝ NGHIỆP VỤ</h2>
+        <h3>HỆ THỐNG ĐÃ SẴN SÀNG</h3>
         <hr>
-        <p>1. Tên trường thông tin đã khớp 100% với file AutoIt/Excel mẫu.</p>
-        <p>2. Chức năng lưu ảnh tự động đặt tên theo nội dung in.</p>
-        <p>3. Các file Excel mẫu đã được tích hợp (Yêu cầu để cùng thư mục trên Web).</p>
+        <p>- Các trường dữ liệu đã khớp 100% với Code AutoIt cũ.</p>
+        <p>- Chức năng lưu ảnh tự đặt tên theo nội dung in.</p>
+        <p>- Tích hợp sẵn file Excel mẫu (Yêu cầu file mẫu nằm cùng thư mục trên Web).</p>
     </div>
 
     <div id="ghep-anh" class="module-page">
@@ -53,13 +53,13 @@
                 <label class="form-label">Chọn ảnh thứ hai</label><input type="file" id="f2" class="form-control mb-2" accept="image/*">
                 <label class="form-label">Chọn ảnh thứ ba</label><input type="file" id="f3" class="form-control mb-3" accept="image/*">
                 <label class="form-label">Nội dung in (Số hiệu - Họ tên)</label>
-                <input type="text" id="ga-txt" class="form-control mb-4" placeholder="Ví dụ: 1234 - NGUYỄN VĂN A">
+                <input type="text" id="ga-txt" class="form-control mb-4" placeholder="Ví dụ: 9999 - NGUYỄN VĂN A">
                 <button onclick="doGhepAnh()" class="btn btn-primary w-100 mb-2 fw-bold">TẠO ẢNH</button>
                 <button onclick="saveImage()" class="btn btn-success w-100 fw-bold">💾 LƯU ẢNH VỀ MÁY</button>
             </div>
             <div class="col-md-7 text-center">
                 <canvas id="canvas" style="display:none"></canvas>
-                <img id="preview-img" src="" alt="Chưa có dữ liệu ảnh">
+                <img id="preview-img" src="" alt="Chưa có ảnh">
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
     <div id="data-form" class="module-page">
         <h4 id="form-title">NHẬP THÔNG TIN</h4>
         <div class="row g-2 mt-3">
-            <div class="section-header">Thông tin định danh</div>
+            <div class="section-header">Thông tin cơ bản</div>
             <div class="col-md-4 field-wrapper" id="w-b7"><label class="form-label">Họ và tên</label><input type="text" id="b7" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c8"><label class="form-label">Tên gọi khác</label><input type="text" id="c8" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c9"><label class="form-label">Ngày tháng năm sinh</label><input type="text" id="c9" class="form-control"></div>
@@ -76,7 +76,7 @@
             <div class="col-md-4 field-wrapper" id="w-e12"><label class="form-label">Số hiệu đối tượng</label><input type="text" id="e12" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c4"><label class="form-label">Tiêu đề (C4)</label><input type="text" id="c4" class="form-control"></div>
 
-            <div class="section-header">Thông tin pháp lý</div>
+            <div class="section-header">Chi tiết pháp lý</div>
             <div class="col-md-12 field-wrapper" id="w-c13"><label class="form-label">Hành vi phạm tội</label><input type="text" id="c13" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-e9"><label class="form-label">Mức án</label><input type="text" id="e9" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c14"><label class="form-label">Bắt ngày</label><input type="text" id="c14" class="form-control"></div>
@@ -85,7 +85,7 @@
             <div class="col-md-6 field-wrapper" id="w-d25"><label class="form-label">Quyết định thi hành án</label><input type="text" id="d25" class="form-control"></div>
             <div class="col-md-12 field-wrapper" id="w-c18"><label class="form-label">Thông tin kèm theo (C18)</label><input type="text" id="c18" class="form-control"></div>
 
-            <div class="section-header">Các thông số bổ sung</div>
+            <div class="section-header">Các ô bổ sung (Theo file mẫu)</div>
             <div class="col-md-2 field-wrapper" id="w-b19"><label class="form-label">B19</label><input type="text" id="b19" class="form-control"></div>
             <div class="col-md-2 field-wrapper" id="w-c19"><label class="form-label">C19</label><input type="text" id="c19" class="form-control"></div>
             <div class="col-md-2 field-wrapper" id="w-d19"><label class="form-label">D19</label><input type="text" id="d19" class="form-control"></div>
@@ -101,7 +101,7 @@
             <div class="col-md-6 field-wrapper" id="w-f22"><label class="form-label">F22</label><input type="text" id="f22" class="form-control"></div>
 
             <div class="col-md-12 mt-4">
-                <button onclick="processExcel()" class="btn btn-info w-100 fw-bold p-3" id="btnExport">XUẤT FILE EXCEL NGHIỆP VỤ</button>
+                <button onclick="processExcel()" class="btn btn-info w-100 fw-bold p-3" id="btnXuat">XUẤT FILE EXCEL NGHIỆP VỤ</button>
             </div>
         </div>
     </div>
@@ -110,14 +110,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
-    const fieldConfigs = {
+    // Cấu hình hiển thị đúng các trường cho từng loại hồ sơ (Khớp 100% AutoIt)
+    const configs = {
         'LẬP HỒ SƠ': ['b7','c8','c9','b11','c12','e9','c4','c13','c14','c15','c18','e20','f20','g20','e22','f22'],
         'CHUYỂN TRẠI': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','b19','c19','d19','e19','f19','g19','e21','g21'],
         'THI HÀNH ÁN': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','d25','b19','c19','d19','e19','f19','g19']
     };
 
-    let currentMod = "";
-    let currentTpl = "";
+    let curMod = "";
+    let curTpl = "";
 
     function switchTab(id, modName, tplName) {
         document.querySelectorAll('.module-page').forEach(p => p.classList.remove('active'));
@@ -126,90 +127,87 @@
         if(event) event.currentTarget.classList.add('active');
 
         if(id === 'data-form') {
-            currentMod = modName;
-            currentTpl = tplName;
+            curMod = modName;
+            curTpl = tplName;
             document.getElementById('form-title').innerText = "NHẬP THÔNG TIN: " + modName;
             document.querySelectorAll('.field-wrapper').forEach(w => w.style.display = 'none');
-            fieldConfigs[modName].forEach(fId => {
-                const wrap = document.getElementById('w-' + fId);
-                if(wrap) wrap.style.display = 'block';
+            configs[modName].forEach(fId => {
+                const target = document.getElementById('w-' + fId);
+                if(target) target.style.display = 'block';
             });
         }
     }
 
-    // XỬ LÝ GHÉP ẢNH
+    // --- LOGIC GHÉP ẢNH ---
     async function doGhepAnh() {
-        try {
-            const can = document.getElementById('canvas'), ctx = can.getContext('2d');
-            const txt = document.getElementById('ga-txt').value;
-            const f = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
-            if (!f[0].files[0] || !f[1].files[0] || !f[2].files[0]) return alert("Vui lòng chọn đủ 3 ảnh!");
+        const can = document.getElementById('canvas'), ctx = can.getContext('2d');
+        const txt = document.getElementById('ga-txt').value;
+        const f = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
+        if (!f[0].files[0] || !f[1].files[0] || !f[2].files[0]) return alert("Vui lòng chọn đủ 3 ảnh!");
 
-            can.width = 1181; can.height = 1772;
-            ctx.fillStyle = "white"; ctx.fillRect(0,0,1181,1772);
-            const imgs = await Promise.all(f.map(i => new Promise((res, rej) => {
-                const r = new FileReader();
-                r.onload = e => { const img = new Image(); img.onload = () => res(img); img.src = e.target.result; };
-                r.onerror = rej;
-                r.readAsDataURL(i.files[0]);
-            })));
+        can.width = 1181; can.height = 1772;
+        ctx.fillStyle = "white"; ctx.fillRect(0,0,1181,1772);
 
-            const bw = 886, bh = 378, x = (1181-bw)/2, gap = (1772-4*bh)/5;
-            for(let i=0; i<4; i++){
-                let y = gap + i*(bh+gap);
-                ctx.drawImage(imgs[0], x, y, bw/3, bh);
-                ctx.drawImage(imgs[1], x+bw/3, y, bw/3, bh);
-                ctx.drawImage(imgs[2], x+2*bw/3, y, bw/3, bh);
-                ctx.fillStyle = "yellow"; ctx.fillRect(x+bw/3, y+bh-70, bw/3, 45);
-                ctx.fillStyle = "black"; ctx.font = "bold 26px Arial"; ctx.textAlign = "center";
-                ctx.fillText(txt, 1181/2, y+bh-38);
-            }
-            document.getElementById('preview-img').src = can.toDataURL('image/jpeg', 0.9);
-        } catch (e) { alert("Lỗi ghép ảnh: " + e.message); }
+        const imgs = await Promise.all(f.map(i => new Promise(res => {
+            const r = new FileReader();
+            r.onload = e => { const img = new Image(); img.onload = () => res(img); img.src = e.target.result; };
+            r.readAsDataURL(i.files[0]);
+        })));
+
+        const bw = 886, bh = 378, x = (1181-bw)/2, gap = (1772-4*bh)/5;
+        for(let i=0; i<4; i++){
+            let y = gap + i*(bh+gap);
+            ctx.drawImage(imgs[0], x, y, bw/3, bh);
+            ctx.drawImage(imgs[1], x+bw/3, y, bw/3, bh);
+            ctx.drawImage(imgs[2], x+2*bw/3, y, bw/3, bh);
+            ctx.fillStyle = "yellow"; ctx.fillRect(x+bw/3, y+bh-70, bw/3, 45);
+            ctx.fillStyle = "black"; ctx.font = "bold 26px Arial"; ctx.textAlign = "center";
+            ctx.fillText(txt, 1181/2, y+bh-38);
+        }
+        document.getElementById('preview-img').src = can.toDataURL('image/jpeg', 0.9);
     }
 
     function saveImage() {
         const src = document.getElementById('preview-img').src;
-        const fileName = document.getElementById('ga-txt').value || "Ket_Qua_Ghep_Anh";
         if(!src || src.includes('data:,')) return alert("Hãy tạo ảnh trước!");
+        const name = document.getElementById('ga-txt').value || "KetQua";
         const a = document.createElement('a');
-        a.href = src; a.download = fileName + ".jpg"; a.click();
+        a.href = src; a.download = name + ".jpg"; a.click();
     }
 
-    // XUẤT EXCEL
+    // --- LOGIC XUẤT EXCEL TỰ ĐỘNG ---
     async function processExcel() {
-        if(!currentTpl) return;
-        const btn = document.getElementById('btnExport');
+        if(!curTpl) return;
+        const btn = document.getElementById('btnXuat');
         btn.disabled = true; btn.innerText = "ĐANG XỬ LÝ...";
 
         try {
-            const response = await fetch(currentTpl);
-            if(!response.ok) throw new Error("Không thấy file " + currentTpl + " trong cùng thư mục.");
-            const arrayBuffer = await response.arrayBuffer();
-            const data = new Uint8Array(arrayBuffer);
-            const wb = XLSX.read(data, {type: 'array'});
+            const res = await fetch(curTpl);
+            if(!res.ok) throw new Error("Không tìm thấy file mẫu " + curTpl + " trên máy chủ.");
+            const ab = await res.arrayBuffer();
+            const wb = XLSX.read(new Uint8Array(ab), {type: 'array'});
             const ws = wb.Sheets[wb.SheetNames[0]];
 
-            const mapping = {
-                'B7': 'b7', 'C7': 'b7', 'C8': 'c8', 'C9': 'c9', 'B11': 'b11', 'C11': 'b11',
-                'C12': 'c12', 'E9': 'e9', 'E12': 'e12', 'C4': 'c4', 'C13': 'c13', 'C14': 'c14',
-                'C15': 'c15', 'C16': 'c16', 'D25': 'd25', 'C18': 'c18', 'B19': 'b19',
-                'C19': 'c19', 'D19': 'd19', 'E19': 'e19', 'F19': 'f19', 'G19': 'g19',
-                'E20': 'e20', 'F20': 'f20', 'G20': 'g20', 'E21': 'e21', 'G21': 'g21',
-                'E22': 'e22', 'F22': 'f22'
+            // Map dữ liệu từ Web vào đúng các ô trong Excel mẫu
+            const map = {
+                'B7':'b7','C8':'c8','C9':'c9','B11':'b11','C11':'b11','C12':'c12','E12':'e12',
+                'C4':'c4','C13':'c13','E9':'e9','C14':'c14','C15':'c15','C16':'c16',
+                'D25':'d25','C18':'c18','B19':'b19','C19':'c19','D19':'d19','E19':'e19',
+                'F19':'f19','G19':'g19','E20':'e20','F20':'f20','G20':'g20','E21':'e21',
+                'G21':'g21','E22':'e22','F22':'f22'
             };
 
-            for(let cell in mapping) {
-                const val = document.getElementById(mapping[cell])?.value;
+            for(let cell in map) {
+                const val = document.getElementById(map[cell])?.value;
                 if(val) {
                     if(!ws[cell]) ws[cell] = { t: 's' };
                     ws[cell].v = val;
                 }
             }
-            
-            const name = document.getElementById('b7').value || "Export";
-            XLSX.writeFile(wb, `${currentMod}_${name}.xlsx`);
-        } catch (e) { alert("Lỗi xuất Excel: " + e.message); }
+
+            const fileName = document.getElementById('b7').value || "File_Ket_Qua";
+            XLSX.writeFile(wb, `${curMod}_${fileName}.xlsx`);
+        } catch (e) { alert("Lỗi: " + e.message); }
         finally { btn.disabled = false; btn.innerText = "XUẤT FILE EXCEL NGHIỆP VỤ"; }
     }
 </script>
