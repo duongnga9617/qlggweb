@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIỆN ÍCH QLGG - BMK CENTER</title>
+    <title>HỆ THỐNG QLGG - BMK FULL OPTION</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root { --bg: #12181B; --card: #1E272E; --text: #ECF0F1; --accent: #00A8FF; }
+        :root { --bg: #12181B; --card: #1E272E; --text: #ECF0F1; --accent: #00A8FF; --green: #2ecc71; }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; min-height: 100vh; margin: 0; }
-        .sidebar { background: var(--card); border-right: 1px solid #333; min-height: 100vh; padding: 15px; position: fixed; width: 220px; }
-        .main-view { margin-left: 220px; padding: 25px; }
-        .nav-link { color: #bdc3c7; padding: 12px; margin-bottom: 5px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .sidebar { background: var(--card); border-right: 1px solid #333; height: 100vh; position: fixed; width: 240px; padding: 15px; z-index: 1000; }
+        .main-view { margin-left: 240px; padding: 30px; height: 100vh; overflow-y: auto; }
+        .nav-link { color: #bdc3c7; padding: 12px; margin-bottom: 5px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 500; }
         .nav-link:hover, .nav-link.active { background: var(--accent); color: white; }
-        .module-page { display: none; background: var(--card); padding: 25px; border-radius: 12px; border: 1px solid #333; }
-        .module-page.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .form-label { font-size: 13px; color: var(--accent); font-weight: bold; margin-top: 10px; }
+        .module-page { display: none; background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #333; margin-bottom: 50px; }
+        .module-page.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .form-label { font-size: 13px; color: var(--accent); font-weight: bold; margin-top: 12px; display: block; }
         .form-control { background: #2c3e50; border: 1px solid #444; color: white; }
-        .section-title { color: #4CAF50; border-left: 4px solid #4CAF50; padding-left: 10px; margin: 20px 0; }
-        #p { max-width: 100%; border: 2px solid #333; border-radius: 8px; margin-top: 15px; }
+        .section-title { color: var(--green); border-left: 4px solid var(--green); padding-left: 10px; margin: 25px 0 15px 0; font-size: 1.1rem; text-transform: uppercase; }
+        #p { max-width: 100%; border: 3px solid #333; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .btn-save { background: var(--green); color: white; font-weight: bold; border: none; padding: 10px; transition: 0.3s; }
+        .btn-save:hover { background: #27ae60; transform: scale(1.02); }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <h5 class="text-center text-warning mb-4">QLGG SYSTEM</h5>
+    <h4 class="text-center text-warning mb-4">QLGG SYSTEM</h4>
     <div class="nav flex-column">
-        <div class="nav-link active" id="btn-home" onclick="switchTab('home')">🏠 TRANG CHỦ</div>
+        <div class="nav-link active" onclick="switchTab('home')">🏠 TRANG CHỦ</div>
         <div class="nav-link" onclick="switchTab('ghep-anh')">🖼️ GHÉP ẢNH (3.0)</div>
         <div class="nav-link" onclick="switchTab('data-form', 'LẬP HỒ SƠ')">📝 LẬP HỒ SƠ</div>
         <div class="nav-link" onclick="switchTab('data-form', 'CHUYỂN TRẠI')">🚚 CHUYỂN TRẠI</div>
@@ -36,52 +38,76 @@
 
 <div class="main-view">
     <div id="home" class="module-page active">
-        <h2>HỆ THỐNG ĐÃ SẴN SÀNG</h2>
-        <hr>
-        <p>Nếu bạn thấy thông báo này, hệ thống đã nạp thành công. Hãy chọn tính năng bên trái.</p>
+        <h2>CHÀO MỪNG TRỞ LẠI!</h2>
+        <hr border-color="#444">
+        <p>Hệ thống đã được cập nhật đầy đủ các trường thông tin từ dữ liệu gốc.</p>
     </div>
 
     <div id="ghep-anh" class="module-page">
-        <h4>🖼️ GHÉP ẢNH (3.0)</h4>
-        <div class="row">
+        <h4>🖼️ CÔNG CỤ GHÉP ẢNH (3.0)</h4>
+        <div class="row mt-4">
             <div class="col-md-5">
-                <label class="form-label">Chọn 3 ảnh thành phần</label>
-                <input type="file" id="f1" class="form-control mb-2">
-                <input type="file" id="f2" class="form-control mb-2">
-                <input type="file" id="f3" class="form-control mb-2">
-                <label class="form-label">Số + Tên (hiển thị trên ảnh)</label>
-                <input type="text" id="ga-txt" class="form-control mb-3">
-                <button onclick="doGhepAnh()" class="btn btn-success w-100 mb-2">TẠO ẢNH NGAY</button>
-                <button onclick="printResult()" class="btn btn-outline-info w-100">IN KẾT QUẢ</button>
+                <label class="form-label">Tấm ảnh số 1</label><input type="file" id="f1" class="form-control">
+                <label class="form-label">Tấm ảnh số 2</label><input type="file" id="f2" class="form-control">
+                <label class="form-label">Tấm ảnh số 3</label><input type="file" id="f3" class="form-control">
+                <label class="form-label">Số + Tên (In lên ảnh)</label>
+                <input type="text" id="ga-txt" class="form-control mb-4" placeholder="Ví dụ: 9999 - NGUYỄN VĂN A">
+                
+                <button onclick="doGhepAnh()" class="btn btn-primary w-100 mb-2 py-2">XỬ LÝ ẢNH</button>
+                <a id="download-link" style="display:none"></a>
+                <button onclick="saveImage()" class="btn btn-save w-100 py-2">💾 LƯU ẢNH VỀ MÁY</button>
             </div>
             <div class="col-md-7 text-center">
                 <canvas id="c" style="display:none"></canvas>
-                <img id="p" src="" alt="Chưa có dữ liệu">
+                <img id="p" src="" alt="Xem trước kết quả tại đây">
             </div>
         </div>
     </div>
 
     <div id="data-form" class="module-page">
-        <h4 id="form-title">NHẬP LIỆU</h4>
-        <div class="row g-2">
-            <div class="section-title">Thông tin cơ bản</div>
+        <h4 id="form-title">THÔNG TIN CHI TIẾT</h4>
+        <div class="row g-2 mt-2">
+            <div class="section-title">1. Thông tin định danh</div>
             <div class="col-md-4"><label class="form-label">Họ và tên (B7/C7)</label><input type="text" id="b7" class="form-control"></div>
             <div class="col-md-4"><label class="form-label">Tên gọi khác (C8)</label><input type="text" id="c8" class="form-control"></div>
             <div class="col-md-4"><label class="form-label">Ngày sinh (C9)</label><input type="text" id="c9" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">Dân tộc (C12)</label><input type="text" id="c12" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">Mức án (E9)</label><input type="text" id="e9" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">Dòng C4 (LapHS)</label><input type="text" id="c4" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">Số hiệu (E12)</label><input type="text" id="e12" class="form-control"></div>
+            
             <div class="col-md-12"><label class="form-label">Đăng ký HKTT (B11/C11)</label><input type="text" id="b11" class="form-control"></div>
-            <div class="col-md-4"><label class="form-label">Dân tộc (C12)</label><input type="text" id="c12" class="form-control"></div>
-            <div class="col-md-4"><label class="form-label">Mức án (E9)</label><input type="text" id="e9" class="form-control"></div>
-            <div class="col-md-4"><label class="form-label">Dòng C4 (LapHS)</label><input type="text" id="c4" class="form-control"></div>
-            <div class="section-title">Chi tiết vụ án & Mẫu biểu</div>
+
+            <div class="section-title">2. Chi tiết pháp lý</div>
             <div class="col-md-12"><label class="form-label">Hành vi phạm tội (C13)</label><input type="text" id="c13" class="form-control"></div>
-            <div class="col-md-3"><label class="form-label">Bắt ngày (C14)</label><input type="text" id="c14" class="form-control"></div>
-            <div class="col-md-3"><label class="form-label">Số lệnh (C15)</label><input type="text" id="c15" class="form-control"></div>
-            <div class="col-md-6"><label class="form-label">Cơ quan ra lệnh (C16)</label><input type="text" id="c16" class="form-control"></div>
-            <div class="col-md-12 mt-4 p-3 border border-warning rounded">
-                <p class="small text-warning">Chọn file .xlsm mẫu để hệ thống điền dữ liệu:</p>
-                <div class="input-group">
-                    <input type="file" id="tpl" class="form-control">
-                    <button onclick="exportFull()" class="btn btn-primary">XUẤT EXCEL</button>
+            <div class="col-md-4"><label class="form-label">Bắt ngày (C14)</label><input type="text" id="c14" class="form-control"></div>
+            <div class="col-md-4"><label class="form-label">Số lệnh/QĐ (C15)</label><input type="text" id="c15" class="form-control"></div>
+            <div class="col-md-4"><label class="form-label">Cơ quan ra lệnh (C16)</label><input type="text" id="c16" class="form-control"></div>
+            <div class="col-md-6"><label class="form-label">QĐ Thi hành án (D25)</label><input type="text" id="d25" class="form-control"></div>
+            <div class="col-md-6"><label class="form-label">Dòng C18 (LapHS)</label><input type="text" id="c18" class="form-control"></div>
+
+            <div class="section-title">3. Các ô bổ sung (Dòng 19 - 22)</div>
+            <div class="col-md-2"><label class="form-label">B19</label><input type="text" id="b19" class="form-control"></div>
+            <div class="col-md-2"><label class="form-label">C19</label><input type="text" id="c19" class="form-control"></div>
+            <div class="col-md-2"><label class="form-label">D19</label><input type="text" id="d19" class="form-control"></div>
+            <div class="col-md-2"><label class="form-label">E19</label><input type="text" id="e19" class="form-control"></div>
+            <div class="col-md-2"><label class="form-label">F19</label><input type="text" id="f19" class="form-control"></div>
+            <div class="col-md-2"><label class="form-label">G19</label><input type="text" id="g19" class="form-control"></div>
+
+            <div class="col-md-3"><label class="form-label">E20 (LapHS)</label><input type="text" id="e20" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">F20 (LapHS)</label><input type="text" id="f20" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">G20 (LapHS)</label><input type="text" id="g20" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">G21 (Chuyentrai)</label><input type="text" id="g21" class="form-control"></div>
+            
+            <div class="col-md-3"><label class="form-label">E21 (Chuyentrai)</label><input type="text" id="e21" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">E22 (LapHS)</label><input type="text" id="e22" class="form-control"></div>
+            <div class="col-md-3"><label class="form-label">F22 (LapHS)</label><input type="text" id="f22" class="form-control"></div>
+
+            <div class="col-md-12 mt-5 p-4 border border-info rounded text-center">
+                <p class="text-info">Để xuất file, bạn hãy chọn đúng File Mẫu (.xlsm) của module đó:</p>
+                <div class="d-flex justify-content-center">
+                    <input type="file" id="tpl" class="form-control w-50 me-2" accept=".xlsm,.xlsx">
+                    <button onclick="exportFull()" class="btn btn-info px-4">XUẤT EXCEL</button>
                 </div>
             </div>
         </div>
@@ -91,54 +117,37 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
-    // Hàm chuyển Tab
-    function switchTab(tabId, title) {
-        // Ẩn tất cả trang
-        const pages = document.getElementsByClassName('module-page');
-        for (let p of pages) p.style.display = 'none';
-        
-        // Hiện trang được chọn
-        const activePage = document.getElementById(tabId);
-        if(activePage) activePage.style.display = 'block';
+    let currentActiveMod = 'home';
 
+    function switchTab(id, title) {
+        document.querySelectorAll('.module-page').forEach(p => p.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
         if(title) document.getElementById('form-title').innerText = title;
-
-        // Cập nhật trạng thái menu
-        const links = document.getElementsByClassName('nav-link');
-        for (let l of links) l.classList.remove('active');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
         event.currentTarget.classList.add('active');
+        currentActiveMod = id === 'data-form' ? title : id;
     }
 
-    // Logic Ghép ảnh 3.0
+    // --- GHÉP ẢNH ---
     async function doGhepAnh() {
-        const can = document.getElementById('c');
-        const ctx = can.getContext('2d');
+        const can = document.getElementById('c'), ctx = can.getContext('2d');
         const txt = document.getElementById('ga-txt').value;
-        const fInput = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
+        const inputs = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
         
-        if (!fInput[0].files[0] || !fInput[1].files[0] || !fInput[2].files[0]) {
-            alert("Bạn phải chọn đủ 3 tấm ảnh!");
-            return;
-        }
+        if (inputs.some(i => !i.files[0])) return alert("Chọn đủ 3 ảnh!");
 
-        can.width = 1181; can.height = 1772;
+        can.width = 1181; can.height = 1772; // Chuẩn 300dpi (10x15cm)
         ctx.fillStyle = "white"; ctx.fillRect(0,0,1181,1772);
 
-        const imgs = await Promise.all(fInput.map(input => {
-            return new Promise(res => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => res(img);
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            });
-        }));
+        const imgs = await Promise.all(inputs.map(inp => new Promise(res => {
+            const reader = new FileReader();
+            reader.onload = e => { const i = new Image(); i.onload = () => res(i); i.src = e.target.result; };
+            reader.readAsDataURL(inp.files[0]);
+        })));
 
-        const bw = 886, bh = 378, x = (1181-886)/2, gap = (1772 - 4*bh)/5;
+        const bw = 886, bh = 378, x = (1181-bw)/2, gap = (1772 - 4*bh)/5;
         for(let i=0; i<4; i++){
-            let y = gap + i*(bh + gap);
+            let y = gap + i*(bh+gap);
             ctx.drawImage(imgs[0], x, y, bw/3, bh);
             ctx.drawImage(imgs[1], x+bw/3, y, bw/3, bh);
             ctx.drawImage(imgs[2], x+2*bw/3, y, bw/3, bh);
@@ -149,40 +158,36 @@
         document.getElementById('p').src = can.toDataURL('image/jpeg', 0.9);
     }
 
-    function printResult() {
+    function saveImage() {
         const img = document.getElementById('p').src;
-        if(!img) return alert("Hãy tạo ảnh trước!");
-        const win = window.open();
-        win.document.write(`<img src="${img}" style="width:100%">`);
-        win.document.close();
-        setTimeout(() => { win.print(); win.close(); }, 500);
+        if(!img) return alert("Vui lòng xử lý ảnh trước!");
+        const link = document.getElementById('download-link');
+        link.href = img;
+        link.download = "Anh_Ghep_QLGG_" + Date.now() + ".jpg";
+        link.click();
     }
 
-    // Logic Excel
+    // --- XUẤT EXCEL ---
     function exportFull() {
         const f = document.getElementById('tpl').files[0];
-        if(!f) return alert("Vui lòng chọn file Excel mẫu!");
-        
+        if(!f) return alert("Chọn file mẫu .xlsm trước!");
         const r = new FileReader();
         r.onload = function(e) {
-            const data = new Uint8Array(e.target.result);
-            const wb = XLSX.read(data, {type: 'array'});
+            const wb = XLSX.read(new Uint8Array(e.target.result), {type:'array'});
             const ws = wb.Sheets[wb.SheetNames[0]];
-            
-            // Điền dữ liệu vào các ô tương ứng như AutoIt
             const map = {
-                'B7': 'b7', 'C7': 'b7', 'C8': 'c8', 'C9': 'c9', 'B11': 'b11', 
-                'C12': 'c12', 'C13': 'c13', 'C14': 'c14', 'C15': 'c15', 'E9': 'e9', 'C4': 'c4'
+                'B7': 'b7', 'C7': 'b7', 'C8': 'c8', 'C9': 'c9', 'B11': 'b11', 'C11': 'b11',
+                'C12': 'c12', 'C13': 'c13', 'C14': 'c14', 'C15': 'c15', 'C16': 'c16',
+                'E9': 'e9', 'C4': 'c4', 'E12': 'e12', 'D25': 'd25', 'C18': 'c18',
+                'B19': 'b19', 'C19': 'c19', 'D19': 'd19', 'E19': 'e19', 'F19': 'f19', 'G19': 'g19',
+                'E20': 'e20', 'F20': 'f20', 'G20': 'g20', 'G21': 'g21', 'E21': 'e21',
+                'E22': 'e22', 'F22': 'f22'
             };
-
             for(let cell in map) {
-                const val = document.getElementById(map[cell]).value;
-                if(val) {
-                    if(!ws[cell]) ws[cell] = { t: 's' };
-                    ws[cell].v = val;
-                }
+                const v = document.getElementById(map[cell]).value;
+                if(v) { if(!ws[cell]) ws[cell] = {t:'s'}; ws[cell].v = v; }
             }
-            XLSX.writeFile(wb, "Ket_Qua_Moi.xlsx");
+            XLSX.writeFile(wb, "Ket_Qua_" + currentActiveMod + ".xlsx");
         };
         r.readAsArrayBuffer(f);
     }
