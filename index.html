@@ -197,4 +197,28 @@
 
     function saveImage() {
         const src = document.getElementById('preview-img').src;
-        if(!src
+        if(!src) return alert("Vui lòng tạo ảnh trước!");
+        const a = document.createElement('a'); a.href = src; a.download = (document.getElementById('ga-txt').value || "KetQua") + ".jpg"; a.click();
+    }
+
+    // 4. XUẤT EXCEL
+    async function processExcel() {
+        if(!curTpl) return;
+        const btn = document.getElementById('btnExport'); btn.innerText = "ĐANG XỬ LÝ...";
+        try {
+            const res = await fetch(curTpl);
+            const ab = await res.arrayBuffer();
+            const wb = XLSX.read(new Uint8Array(ab), {type: 'array'});
+            const ws = wb.Sheets[wb.SheetNames[0]];
+            const map = { 'B7':'b7','C8':'c8','C9':'c9','B11':'b11','C11':'b11','C12':'c12','E12':'e12','C4':'c4','C13':'c13','E9':'e9','C14':'c14','C15':'c15','C16':'c16','D25':'d25','C18':'c18','B19':'b19','C19':'c19','D19':'d19','E19':'e19','F19':'f19','G19':'g19','E20':'e20','F20':'f20','G20':'g20','E21':'e21','G21':'g21','E22':'e22','F22':'f22' };
+            for(let cell in map) {
+                const val = document.getElementById(map[cell])?.value;
+                if(val) { if(!ws[cell]) ws[cell] = { t: 's' }; ws[cell].v = val; }
+            }
+            XLSX.writeFile(wb, curMod + "_" + (document.getElementById('b7').value || "DoiTuong") + ".xlsx");
+        } catch (e) { alert("Lỗi: Hãy chắc chắn bạn đã tải các file .xlsm lên cùng thư mục GitHub!"); }
+        finally { btn.innerText = "XUẤT FILE EXCEL NGHIỆP VỤ"; }
+    }
+</script>
+</body>
+</html>
