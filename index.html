@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ Thống Xử Lý Ảnh BMK</title>
+    <title>Hệ Thống Xử Lý Ảnh BMK 3.0</title>
     <style>
         :root {
             --bg: #1E272E; --panel: #2F3640; --primary: #4CAF50;
@@ -13,106 +13,121 @@
         
         /* Login Style */
         #login-box { background: var(--panel); padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); width: 350px; text-align: center; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: none; box-sizing: border-box; }
+        .input-field { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #444; box-sizing: border-box; background: #fff; color: #000; }
         button { width: 100%; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .btn-login { background: var(--primary); color: white; margin-top: 10px; }
+        .btn-login:hover { background: #45a049; }
 
         /* Main App Style */
-        #main-app { display: none; width: 95%; max-width: 900px; background: var(--panel); padding: 25px; border-radius: 12px; }
-        .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--subtext); padding-bottom: 10px; }
-        .tab { padding: 10px 20px; cursor: pointer; border-radius: 6px; background: transparent; color: var(--subtext); border: 1px solid var(--subtext); }
+        #main-app { display: none; width: 95%; max-width: 900px; background: var(--panel); padding: 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--subtext); padding-bottom: 15px; }
+        .tab { padding: 10px 20px; cursor: pointer; border-radius: 6px; background: transparent; color: var(--subtext); border: 1px solid var(--subtext); width: auto; }
         .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
         
         .tool-content { display: none; }
         .tool-content.active { display: block; }
         
-        .group-box { border: 1px solid #444; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .label-title { display: block; font-weight: bold; margin-bottom: 10px; color: var(--accent); }
+        .group-box { border: 1px solid #444; padding: 15px; border-radius: 8px; margin-bottom: 20px; background: rgba(0,0,0,0.2); }
+        .label-title { display: block; font-weight: bold; margin-bottom: 10px; color: var(--accent); text-transform: uppercase; font-size: 0.9em; }
         
         .row { display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
-        .file-info { font-size: 0.85em; color: var(--subtext); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .file-info { font-size: 0.85em; color: var(--subtext); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        .btn-tool { background: var(--accent); color: white; width: auto; padding: 10px 20px; }
-        .btn-create { background: var(--primary); font-size: 1.1em; height: 50px; }
-        .btn-orange { background: #E67E22; height: 50px; }
+        .btn-tool { background: var(--accent); color: white; width: auto; padding: 8px 15px; font-size: 0.9em; }
+        .btn-create { background: var(--primary); font-size: 1.1em; height: 55px; margin-top: 10px; }
+        .btn-orange { background: #E67E22; height: 55px; margin-top: 10px; }
         
+        #status-bar { margin-top: 20px; font-size: 0.85em; color: var(--subtext); border-top: 1px solid #444; padding-top: 10px; }
         canvas { display: none; }
     </style>
 </head>
 <body>
 
     <div id="login-box">
-        <h2 style="color: var(--accent)">BMK SYSTEM</h2>
-        <input type="text" id="username" placeholder="Tài khoản">
-        <input type="password" id="password" placeholder="Mật khẩu">
-        <button class="btn-login" onclick="checkLogin()">ĐĂNG NHẬP</button>
-        <p id="login-err" style="color: #ff4757; font-size: 0.8em; margin-top: 10px; visibility: hidden;">Sai thông tin đăng nhập!</p>
+        <h2 style="color: var(--accent); margin-bottom: 5px;">BMK PHOTO SYSTEM</h2>
+        <p style="color: var(--subtext); font-size: 0.8em; margin-bottom: 25px;">Vui lòng đăng nhập để tiếp tục</p>
+        <input type="text" id="username" class="input-field" placeholder="Tài khoản">
+        <input type="password" id="password" class="input-field" placeholder="Mật khẩu">
+        <button type="button" class="btn-login" onclick="checkLogin()">ĐĂNG NHẬP</button>
+        <p id="login-err" style="color: #ff4757; font-size: 0.85em; margin-top: 15px; display: none;">Sai tài khoản hoặc mật khẩu!</p>
     </div>
 
     <div id="main-app">
         <div class="nav-tabs">
-            <button class="tab active" onclick="switchTab(0)">GHÉP ẢNH 3 TẤM (3.0)</button>
-            <button class="tab" onclick="switchTab(1)">TẠO ẢNH THẺ (2.0)</button>
-            <button onclick="location.reload()" style="margin-left: auto; width: 80px; background: #e84118; color: white; padding: 5px;">Thoát</button>
+            <button type="button" class="tab active" onclick="switchTab(0)">GHÉP ẢNH 3 TẤM (3.0)</button>
+            <button type="button" class="tab" onclick="switchTab(1)">TẠO ẢNH THẺ (2.0)</button>
+            <button type="button" onclick="location.reload()" style="margin-left: auto; width: 80px; background: #e84118; color: white; padding: 5px; font-size: 0.8em;">Đăng xuất</button>
         </div>
 
         <div id="tool1" class="tool-content active">
             <div class="group-box">
-                <span class="label-title">CHỌN 3 ẢNH NGUỒN</span>
+                <span class="label-title">Chọn 3 ảnh nguồn [cite: 1]</span>
                 <div class="row">
-                    <button class="btn-tool" onclick="document.getElementById('img1').click()">Chọn ảnh 1</button>
+                    <button type="button" class="btn-tool" onclick="document.getElementById('img1').click()">Chọn ảnh 1</button>
                     <span id="txt-img1" class="file-info">Chưa chọn ảnh</span>
                     <input type="file" id="img1" hidden onchange="updateLabel(1)">
                 </div>
                 <div class="row">
-                    <button class="btn-tool" onclick="document.getElementById('img2').click()">Chọn ảnh 2</button>
+                    <button type="button" class="btn-tool" onclick="document.getElementById('img2').click()">Chọn ảnh 2</button>
                     <span id="txt-img2" class="file-info">Chưa chọn ảnh</span>
                     <input type="file" id="img2" hidden onchange="updateLabel(2)">
                 </div>
                 <div class="row">
-                    <button class="btn-tool" onclick="document.getElementById('img3').click()">Chọn ảnh 3</button>
+                    <button type="button" class="btn-tool" onclick="document.getElementById('img3').click()">Chọn ảnh 3</button>
                     <span id="txt-img3" class="file-info">Chưa chọn ảnh</span>
                     <input type="file" id="img3" hidden onchange="updateLabel(3)">
                 </div>
             </div>
             <div class="group-box">
-                <span class="label-title">THÔNG TIN IN</span>
-                <input type="text" id="card-text" placeholder="Nhập Số + Tên..." style="color: black;">
+                <span class="label-title">Thông tin in [cite: 1]</span>
+                <input type="text" id="card-text" class="input-field" placeholder="Nhập Số + Tên..." style="margin: 0;">
             </div>
-            <button class="btn-create" onclick="processBMK3()">TẠO ẢNH GHÉP</button>
+            <button type="button" class="btn-create" onclick="processBMK3()">TẠO ẢNH GHÉP (10x15)</button>
         </div>
 
         <div id="tool2" class="tool-content">
             <div class="group-box">
-                <span class="label-title">CHỌN ẢNH CẦN LÀM THẺ</span>
+                <span class="label-title">Chọn ảnh cần làm thẻ [cite: 9, 12]</span>
                 <div class="row">
-                    <button class="btn-tool" onclick="document.getElementById('img-single').click()">Duyệt ảnh</button>
+                    <button type="button" class="btn-tool" onclick="document.getElementById('img-single').click()">Duyệt ảnh</button>
                     <span id="txt-img-single" class="file-info">Chưa chọn ảnh</span>
                     <input type="file" id="img-single" hidden onchange="updateLabel('single')">
                 </div>
             </div>
             <div style="display: flex; gap: 15px;">
-                <button class="btn-create" onclick="processPhotoCard('3x4')">TẠO ẢNH 3x4</button>
-                <button class="btn-orange" onclick="processPhotoCard('4x6')">TẠO ẢNH 4x6</button>
+                <button type="button" class="btn-create" style="background: #2ecc71;" onclick="processPhotoCard('3x4')">TẠO ẢNH 3x4 [cite: 13]</button>
+                <button type="button" class="btn-orange" onclick="processPhotoCard('4x6')">TẠO ẢNH 4x6 [cite: 13]</button>
             </div>
         </div>
+
+        <div id="status-bar">Trạng thái: <span id="stt-text">Sẵn sàng [cite: 2]</span></div>
     </div>
 
     <canvas id="mainCanvas"></canvas>
 
     <script>
-        // 1. Xử lý Đăng nhập
+        // 1. Kiểm tra đăng nhập
         function checkLogin() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
-            // Thay đổi tài khoản/mật khẩu tại đây
-            if(u === "admin" && p === "123456") {
+            const err = document.getElementById('login-err');
+
+            // Cập nhật tài khoản theo yêu cầu
+            if(u === "quangninh" && p === "113113@") {
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
+                err.style.display = 'none';
             } else {
-                document.getElementById('login-err').style.visibility = 'visible';
+                err.style.display = 'block';
             }
         }
+
+        // Cho phép nhấn Enter để đăng nhập
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkLogin();
+            }
+        });
 
         // 2. Chuyển Tab
         function switchTab(idx) {
@@ -120,14 +135,20 @@
             const contents = document.querySelectorAll('.tool-content');
             tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
             contents.forEach((c, i) => c.classList.toggle('active', i === idx));
+            document.getElementById('stt-text').innerText = "Sẵn sàng [cite: 2]";
         }
 
         function updateLabel(id) {
             const input = document.getElementById(id === 'single' ? 'img-single' : 'img' + id);
-            document.getElementById('txt-img-' + id).innerText = input.files[0].name;
+            const label = document.getElementById('txt-img-' + id);
+            if(input.files[0]) {
+                label.innerText = input.files[0].name;
+                label.style.color = "#4CAF50";
+                document.getElementById('stt-text').innerText = "Đã chọn ảnh " + id + " [cite: 3]";
+            }
         }
 
-        // 3. Logic Xử lý ảnh BMK 3.0 (Ghép 3 tấm) [cite: 1, 6, 7]
+        // 3. Xử lý GHÉP ẢNH 3 TẤM (BMK 3.0) [cite: 6, 7]
         async function processBMK3() {
             const files = [
                 document.getElementById('img1').files[0],
@@ -138,9 +159,12 @@
 
             if (files.some(f => !f)) return alert("Vui lòng chọn đủ 3 ảnh!");
 
+            document.getElementById('stt-text').innerText = "Đang xử lý...";
             const canvas = document.getElementById('mainCanvas');
             const ctx = canvas.getContext('2d');
-            canvas.width = 1181; canvas.height = 1772; // Kích thước chuẩn [cite: 7]
+            
+            // Kích thước 1181x1772 (Chuẩn 300dpi khổ 10x15) [cite: 7]
+            canvas.width = 1181; canvas.height = 1772;
             ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, 1181, 1772);
 
             const imgs = await Promise.all(files.map(f => loadImage(f)));
@@ -150,36 +174,42 @@
 
             for (let i = 0; i < 4; i++) {
                 let drawY = gap + i * (bh + gap);
-                // Vẽ 3 ảnh [cite: 6]
+                // Vẽ 3 ảnh cạnh nhau [cite: 6]
                 imgs.forEach((img, idx) => {
                     ctx.drawImage(img, x + idx * iw, drawY, iw, bh);
                 });
-                // Vẽ khung text màu vàng [cite: 6]
-                ctx.fillStyle = "yellow";
-                ctx.fillRect(x + iw, drawY + bh - 70, iw, 45);
-                ctx.fillStyle = "black";
-                ctx.font = "bold 26px 'Times New Roman'";
-                ctx.textAlign = "center";
-                ctx.fillText(text, x + iw + (iw/2), drawY + bh - 38);
+                
+                // Vẽ khung text màu vàng [cite: 5, 6]
+                if(text) {
+                    ctx.fillStyle = "yellow";
+                    ctx.fillRect(x + iw, drawY + bh - 70, iw, 45);
+                    ctx.fillStyle = "black";
+                    ctx.font = "bold 26px 'Times New Roman'";
+                    ctx.textAlign = "center";
+                    ctx.fillText(text, x + iw + (iw/2), drawY + bh - 38);
+                }
             }
-            downloadCanvas("Ghep_3_Anh");
+            downloadCanvas("Ghep_3_Anh_" + text);
+            document.getElementById('stt-text').innerText = "Đã tạo ảnh thành công [cite: 5]";
         }
 
-        // 4. Logic Tạo ảnh thẻ 2.0 (3x4 và 4x6) [cite: 17, 18, 19, 22, 23, 24]
+        // 4. Xử lý TẠO ẢNH THẺ (2.0) [cite: 17, 20, 22]
         async function processPhotoCard(type) {
             const file = document.getElementById('img-single').files[0];
             if (!file) return alert("Vui lòng chọn ảnh!");
 
+            document.getElementById('stt-text').innerText = "Đang xử lý ảnh " + type + "...";
             const img = await loadImage(file);
             const canvas = document.getElementById('mainCanvas');
             const ctx = canvas.getContext('2d');
+            
             canvas.width = 1181; canvas.height = 1772;
             ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, 1181, 1772);
 
-            const targetW = (type === '3x4') ? 354 : 472; [cite: 18]
-            const targetH = (type === '3x4') ? 472 : 709; [cite: 19]
+            const targetW = (type === '3x4') ? 354 : 472; // [cite: 18]
+            const targetH = (type === '3x4') ? 472 : 709; // [cite: 19]
 
-            // Crop trung tâm [cite: 20, 21]
+            // Tính toán Crop trung tâm [cite: 20, 21]
             const ratio = targetW / targetH;
             let sW = img.width, sH = img.height, sX = 0, sY = 0;
             if ((img.width / img.height) > ratio) {
@@ -189,23 +219,25 @@
             }
 
             if (type === '3x4') { // Lưới 3x3 [cite: 22, 23]
+                const marginX = 45, marginY = 130, spX = 40, spY = 50;
                 for (let r = 0; r < 3; r++) {
                     for (let c = 0; c < 3; c++) {
-                        ctx.drawImage(img, sX, sY, sW, sH, 45 + c * 394, 130 + r * 522, 354, 472);
+                        ctx.drawImage(img, sX, sY, sW, sH, marginX + c * (targetW + spX), marginY + r * (targetH + spY), targetW, targetH);
                     }
                 }
-            } else { // Lưới 2x2 [cite: 24]
+            } else { // Lưới 2x2 [cite: 23, 24]
                 const posX = [65, 635], posY = [85, 935];
                 for (let i = 0; i < 2; i++) {
                     for (let j = 0; j < 2; j++) {
-                        ctx.drawImage(img, sX, sY, sW, sH, posX[i], posY[j], 472, 709);
+                        ctx.drawImage(img, sX, sY, sW, sH, posX[i], posY[j], targetW, targetH);
                     }
                 }
             }
             downloadCanvas("Anh_The_" + type);
+            document.getElementById('stt-text').innerText = "Hoàn thành " + type + " [cite: 27]";
         }
 
-        // Utilities
+        // Hàm hỗ trợ tải ảnh và download
         function loadImage(file) {
             return new Promise(res => {
                 const img = new Image();
@@ -216,8 +248,8 @@
 
         function downloadCanvas(name) {
             const link = document.createElement('a');
-            link.download = name + '_' + Date.now() + '.jpg';
-            link.href = document.getElementById('mainCanvas').toDataURL("image/jpeg", 0.9);
+            link.download = name + '.jpg';
+            link.href = document.getElementById('mainCanvas').toDataURL("image/jpeg", 0.95);
             link.click();
         }
     </script>
