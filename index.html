@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HỆ THỐNG QLGG - BMK CENTER</title>
+    <title>HỆ THỐNG QUẢN LÝ TỔNG HỢP - BMK CENTER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        :root { --bg: #12181B; --card: #1E272E; --text: #ECF0F1; --accent: #00A8FF; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; display: flex; }
-        .sidebar { background: var(--card); border-right: 1px solid #333; width: 240px; height: 100vh; position: fixed; padding: 15px; }
-        .main-view { margin-left: 240px; padding: 30px; width: calc(100% - 240px); }
-        .nav-link { color: #bdc3c7; padding: 12px; margin-bottom: 5px; border-radius: 8px; cursor: pointer; transition: 0.2s; }
-        .nav-link:hover, .nav-link.active { background: var(--accent); color: white; }
-        .module-page { display: none; background: var(--card); padding: 25px; border-radius: 12px; border: 1px solid #444; }
-        .module-page.active { display: block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .field-wrapper { display: none; margin-bottom: 10px; }
-        .form-label { font-size: 13px; color: var(--accent); font-weight: bold; }
-        .form-control { background: #2c3e50; border: 1px solid #444; color: white; }
-        #preview-img { max-width: 100%; border: 3px solid #333; border-radius: 8px; margin-top: 15px; }
+        :root { --bg: #12181B; --card: #1E272E; --text: #ECF0F1; --accent: #00A8FF; --green: #2ecc71; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; display: flex; }
+        .sidebar { background: var(--card); border-right: 1px solid #333; width: 250px; height: 100vh; position: fixed; padding: 20px 15px; z-index: 100; }
+        .main-view { margin-left: 250px; padding: 30px; width: calc(100% - 250px); min-height: 100vh; }
+        .nav-link { color: #bdc3c7; padding: 12px; margin-bottom: 8px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: 500; }
+        .nav-link:hover, .nav-link.active { background: var(--accent); color: white; box-shadow: 0 4px 15px rgba(0,168,255,0.3); }
+        .module-page { display: none; background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #444; }
+        .module-page.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .field-wrapper { display: none; margin-bottom: 15px; }
+        .form-label { font-size: 12px; color: var(--accent); font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+        .form-control { background: #2c3e50; border: 1px solid #444; color: white; border-radius: 6px; }
+        .form-control:focus { background: #34495e; color: white; border-color: var(--accent); box-shadow: none; }
+        .section-header { color: var(--green); border-bottom: 1px solid #444; padding-bottom: 5px; margin: 20px 0 15px 0; font-weight: bold; width: 100%; }
+        #preview-img { max-width: 100%; border: 4px solid #333; border-radius: 10px; margin-top: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
@@ -37,112 +39,128 @@
 <div class="main-view">
     <div id="home" class="module-page active">
         <h2>HỆ THỐNG ĐÃ SẴN SÀNG</h2>
-        <hr>
-        <p>Nếu bạn thấy thông báo này, JavaScript giao diện đang hoạt động tốt.</p>
+        <hr border-color="#444">
+        <p>Chọn chức năng bên trái để bắt đầu nhập liệu. Dữ liệu sẽ được điền chính xác vào các ô Excel theo file AutoIt gốc.</p>
     </div>
 
     <div id="ghep-anh" class="module-page">
-        <h4>🖼️ GHÉP ẢNH 3.0</h4>
-        <div class="row">
+        <h4>🖼️ GHÉP ẢNH DCB - BMK 3.0</h4>
+        <div class="row mt-3">
             <div class="col-md-5">
-                <label class="form-label">Chọn 3 ảnh</label>
-                <input type="file" id="f1" class="form-control mb-2">
-                <input type="file" id="f2" class="form-control mb-2">
-                <input type="file" id="f3" class="form-control mb-2">
-                <label class="form-label">Số hiệu - Họ tên</label>
-                <input type="text" id="ga-txt" class="form-control mb-3">
-                <button onclick="doGhepAnh()" class="btn btn-primary w-100 mb-2">TẠO ẢNH</button>
-                <button onclick="saveImage()" class="btn btn-success w-100">💾 LƯU ẢNH</button>
+                <label class="form-label">Ảnh 1 (Trái)</label><input type="file" id="f1" class="form-control mb-2" accept="image/*">
+                <label class="form-label">Ảnh 2 (Giữa)</label><input type="file" id="f2" class="form-control mb-2" accept="image/*">
+                <label class="form-label">Ảnh 3 (Phải)</label><input type="file" id="f3" class="form-control mb-3" accept="image/*">
+                <label class="form-label">Nội dung in (Số hiệu - Tên)</label>
+                <input type="text" id="ga-txt" class="form-control mb-4" placeholder="Ví dụ: 9999 - NGUYỄN VĂN A">
+                <button onclick="doGhepAnh()" class="btn btn-primary w-100 mb-2 fw-bold">TẠO ẢNH</button>
+                <button onclick="saveImage()" class="btn btn-success w-100 fw-bold">💾 LƯU ẢNH VỀ MÁY</button>
             </div>
             <div class="col-md-7 text-center">
                 <canvas id="canvas" style="display:none"></canvas>
-                <img id="preview-img" src="" alt="Kết quả">
+                <img id="preview-img" src="" alt="Chưa có dữ liệu ảnh">
             </div>
         </div>
     </div>
 
     <div id="data-form" class="module-page">
         <h4 id="form-title">NHẬP LIỆU</h4>
-        <div class="row g-2">
-            <div class="col-md-4 field-wrapper" id="w-b7"><label class="form-label">Họ tên (B7/C7)</label><input type="text" id="b7" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-c8"><label class="form-label">Tên khác (C8)</label><input type="text" id="c8" class="form-control"></div>
+        <div class="row g-2 mt-3">
+            <div class="section-header">Thông tin cơ bản</div>
+            <div class="col-md-4 field-wrapper" id="w-b7"><label class="form-label">Họ và tên (B7/C7)</label><input type="text" id="b7" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c8"><label class="form-label">Tên gọi khác (C8)</label><input type="text" id="c8" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c9"><label class="form-label">Ngày sinh (C9)</label><input type="text" id="c9" class="form-control"></div>
-            <div class="col-md-8 field-wrapper" id="w-b11"><label class="form-label">HKTT (B11/C11)</label><input type="text" id="b11" class="form-control"></div>
+            <div class="col-md-8 field-wrapper" id="w-b11"><label class="form-label">Đăng ký HKTT (B11/C11)</label><input type="text" id="b11" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c12"><label class="form-label">Dân tộc (C12)</label><input type="text" id="c12" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-e9"><label class="form-label">Mức án (E9)</label><input type="text" id="e9" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-e12"><label class="form-label">Số hiệu (E12)</label><input type="text" id="e12" class="form-control"></div>
-            <div class="col-md-12 field-wrapper" id="w-c13"><label class="form-label">Tội danh (C13)</label><input type="text" id="c13" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-c15"><label class="form-label">Số lệnh (C15)</label><input type="text" id="c15" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-d25"><label class="form-label">QĐ THA (D25)</label><input type="text" id="d25" class="form-control"></div>
-            
+            <div class="col-md-4 field-wrapper" id="w-e12"><label class="form-label">Số hiệu đối tượng (E12)</label><input type="text" id="e12" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c4"><label class="form-label">Dòng C4 (LapHS)</label><input type="text" id="c4" class="form-control"></div>
+
+            <div class="section-header">Chi tiết vụ án & Pháp lý</div>
+            <div class="col-md-12 field-wrapper" id="w-c13"><label class="form-label">Hành vi phạm tội (C13)</label><input type="text" id="c13" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c14"><label class="form-label">Bắt ngày (C14)</label><input type="text" id="c14" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c15"><label class="form-label">Số hiệu Lệnh/QĐ (C15)</label><input type="text" id="c15" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c16"><label class="form-label">Cơ quan ra lệnh (C16)</label><input type="text" id="c16" class="form-control"></div>
+            <div class="col-md-6 field-wrapper" id="w-d25"><label class="form-label">QĐ Thi hành án (D25 - THA)</label><input type="text" id="d25" class="form-control"></div>
+            <div class="col-md-6 field-wrapper" id="w-c18"><label class="form-label">Dòng C18 (LapHS)</label><input type="text" id="c18" class="form-control"></div>
+
+            <div class="section-header">Các ô bổ sung (Dòng 19 - 22)</div>
             <div class="col-md-2 field-wrapper" id="w-b19"><label class="form-label">B19</label><input type="text" id="b19" class="form-control"></div>
-            <div class="col-md-2 field-wrapper" id="w-g21"><label class="form-label">G21</label><input type="text" id="g21" class="form-control"></div>
+            <div class="col-md-2 field-wrapper" id="w-c19"><label class="form-label">C19</label><input type="text" id="c19" class="form-control"></div>
+            <div class="col-md-2 field-wrapper" id="w-d19"><label class="form-label">D19</label><input type="text" id="d19" class="form-control"></div>
+            <div class="col-md-2 field-wrapper" id="w-e19"><label class="form-label">E19</label><input type="text" id="e19" class="form-control"></div>
+            <div class="col-md-2 field-wrapper" id="w-f19"><label class="form-label">F19</label><input type="text" id="f19" class="form-control"></div>
+            <div class="col-md-2 field-wrapper" id="w-g19"><label class="form-label">G19</label><input type="text" id="g19" class="form-control"></div>
+
+            <div class="col-md-4 field-wrapper" id="w-e20"><label class="form-label">E20 (LapHS)</label><input type="text" id="e20" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-f20"><label class="form-label">F20 (LapHS)</label><input type="text" id="f20" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-g20"><label class="form-label">G20 (LapHS)</label><input type="text" id="g20" class="form-control"></div>
             
-            <div class="col-md-12 mt-4">
-                <div class="p-3 border border-info rounded">
-                    <label class="form-label text-white">Chọn File Mẫu Excel (.xlsm)</label>
-                    <div class="input-group">
-                        <input type="file" id="xl-tpl" class="form-control">
-                        <button onclick="exportExcel()" class="btn btn-info">XUẤT FILE</button>
-                    </div>
+            <div class="col-md-6 field-wrapper" id="w-e21"><label class="form-label">E21 (Chuyentrai)</label><input type="text" id="e21" class="form-control"></div>
+            <div class="col-md-6 field-wrapper" id="w-g21"><label class="form-label">G21 (Chuyentrai)</label><input type="text" id="g21" class="form-control"></div>
+
+            <div class="col-md-6 field-wrapper" id="w-e22"><label class="form-label">E22 (LapHS)</label><input type="text" id="e22" class="form-control"></div>
+            <div class="col-md-6 field-wrapper" id="w-f22"><label class="form-label">F22 (LapHS)</label><input type="text" id="f22" class="form-control"></div>
+
+            <div class="col-md-12 mt-4 p-4 border border-info rounded bg-opacity-10 bg-info">
+                <p class="text-info fw-bold">Bước cuối: Chọn File mẫu .xlsm tương ứng</p>
+                <div class="input-group">
+                    <input type="file" id="excel-file" class="form-control">
+                    <button onclick="processExcel()" class="btn btn-info fw-bold">XUẤT EXCEL NGAY</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script>
-    // Định nghĩa các trường cho từng module theo AutoIt
-    const config = {
-        'LẬP HỒ SƠ': ['b7','c8','c9','b11','e9','c13','c15'],
-        'CHUYỂN TRẠI': ['b7','c8','c9','b11','e9','e12','c13','c15','b19','g21'],
-        'THI HÀNH ÁN': ['b7','c8','c9','b11','e9','e12','c13','c15','d25']
+    // CẤU HÌNH CHI TIẾT TRƯỜNG CHO TỪNG FILE AUTOIT
+    const fieldConfigs = {
+        'LẬP HỒ SƠ': ['b7','c8','c9','b11','c12','e9','c4','c13','c14','c15','c18','e20','f20','g20','e22','f22'],
+        'CHUYỂN TRẠI': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','b19','c19','d19','e19','f19','g19','e21','g21'],
+        'THI HÀNH ÁN': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','d25','b19','c19','d19','e19','f19','g19']
     };
 
-    let activeMod = "";
+    let currentMod = "";
 
-    function switchTab(tabId, modName) {
-        // 1. Ẩn hiện trang
+    function switchTab(id, modName) {
         document.querySelectorAll('.module-page').forEach(p => p.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        
-        // 2. Highlight menu
+        document.getElementById(id).classList.add('active');
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
         if(event) event.currentTarget.classList.add('active');
 
-        // 3. Xử lý Form nếu là module nhập liệu
-        if(tabId === 'data-form') {
-            activeMod = modName;
+        if(id === 'data-form') {
+            currentMod = modName;
             document.getElementById('form-title').innerText = modName;
+            // Ẩn/Hiện trường theo config
             document.querySelectorAll('.field-wrapper').forEach(w => w.style.display = 'none');
-            config[modName].forEach(f => {
-                const el = document.getElementById('w-' + f);
-                if(el) el.style.display = 'block';
+            fieldConfigs[modName].forEach(fId => {
+                const wrap = document.getElementById('w-' + fId);
+                if(wrap) wrap.style.display = 'block';
             });
         }
     }
 
+    // --- XỬ LÝ GHÉP ẢNH ---
     async function doGhepAnh() {
         const can = document.getElementById('canvas'), ctx = can.getContext('2d');
         const txt = document.getElementById('ga-txt').value;
-        const f1 = document.getElementById('f1').files[0], f2 = document.getElementById('f2').files[0], f3 = document.getElementById('f3').files[0];
+        const f = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
         
-        if(!f1 || !f2 || !f3) return alert("Chọn đủ 3 ảnh!");
+        if (!f[0].files[0] || !f[1].files[0] || !f[2].files[0]) return alert("Hãy chọn đủ 3 ảnh!");
 
         can.width = 1181; can.height = 1772;
         ctx.fillStyle = "white"; ctx.fillRect(0,0,1181,1772);
 
-        const loadImg = (file) => new Promise(res => {
+        const imgs = await Promise.all(f.map(i => new Promise(res => {
             const r = new FileReader();
             r.onload = e => { const img = new Image(); img.onload = () => res(img); img.src = e.target.result; };
-            r.readAsDataURL(file);
-        });
+            r.readAsDataURL(i.files[0]);
+        })));
 
-        const imgs = [await loadImg(f1), await loadImg(f2), await loadImg(f3)];
         const bw = 886, bh = 378, x = (1181-bw)/2, gap = (1772-4*bh)/5;
-
-        for(let i=0; i<4; i++) {
+        for(let i=0; i<4; i++){
             let y = gap + i*(bh+gap);
             ctx.drawImage(imgs[0], x, y, bw/3, bh);
             ctx.drawImage(imgs[1], x+bw/3, y, bw/3, bh);
@@ -156,27 +174,42 @@
 
     function saveImage() {
         const src = document.getElementById('preview-img').src;
-        if(!src) return alert("Hãy tạo ảnh trước!");
+        if(!src) return alert("Chưa có ảnh để lưu!");
         const a = document.createElement('a');
-        a.href = src; a.download = "ket_qua.jpg"; a.click();
+        a.href = src; a.download = "QLGG_BMK_3.0.jpg"; a.click();
     }
 
-    function exportExcel() {
-        const file = document.getElementById('xl-tpl').files[0];
-        if(!file) return alert("Vui lòng chọn file mẫu!");
+    // --- XỬ LÝ XUẤT EXCEL ---
+    function processExcel() {
+        const fileIn = document.getElementById('excel-file').files[0];
+        if(!fileIn) return alert("Vui lòng chọn file Excel mẫu!");
+
         const reader = new FileReader();
         reader.onload = function(e) {
             const data = new Uint8Array(e.target.result);
             const wb = XLSX.read(data, {type: 'array'});
             const ws = wb.Sheets[wb.SheetNames[0]];
-            const map = { 'B7':'b7', 'C8':'c8', 'C9':'c9', 'B11':'b11', 'E9':'e9', 'E12':'e12', 'C13':'c13', 'C15':'c15', 'D25':'d25', 'B19':'b19', 'G21':'g21' };
-            for(let cell in map) {
-                const val = document.getElementById(map[cell]).value;
-                if(val) { if(!ws[cell]) ws[cell] = {t:'s'}; ws[cell].v = val; }
+
+            // Map chính xác các ô từ mã AutoIt
+            const mapping = {
+                'B7': 'b7', 'C7': 'b7', 'C8': 'c8', 'C9': 'c9', 'B11': 'b11', 'C11': 'b11',
+                'C12': 'c12', 'E9': 'e9', 'E12': 'e12', 'C4': 'c4', 'C13': 'c13', 'C14': 'c14',
+                'C15': 'c15', 'C16': 'c16', 'D25': 'd25', 'C18': 'c18', 'B19': 'b19',
+                'C19': 'c19', 'D19': 'd19', 'E19': 'e19', 'F19': 'f19', 'G19': 'g19',
+                'E20': 'e20', 'F20': 'f20', 'G20': 'g20', 'E21': 'e21', 'G21': 'g21',
+                'E22': 'e22', 'F22': 'f22'
+            };
+
+            for(let cell in mapping) {
+                const inputVal = document.getElementById(mapping[cell]).value;
+                if(inputVal) {
+                    if(!ws[cell]) ws[cell] = { t: 's' };
+                    ws[cell].v = inputVal;
+                }
             }
-            XLSX.writeFile(wb, activeMod + ".xlsx");
+            XLSX.writeFile(wb, `KQ_${currentMod}.xlsx`);
         };
-        reader.readAsArrayBuffer(file);
+        reader.readAsArrayBuffer(fileIn);
     }
 </script>
 </body>
