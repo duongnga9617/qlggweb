@@ -3,93 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMK CENTER - QUẢN LÝ TỔNG HỢP</title>
+    <title>BMK CENTER - HỆ THỐNG NGHIỆP VỤ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root { --bg: #0f1416; --card: #1c252a; --text: #e1e8eb; --accent: #00a8ff; --green: #2ecc71; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
-        
-        /* LOGIN SCREEN */
-        #login-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #1c252a 0%, #0f1416 100%);
-            display: flex; align-items: center; justify-content: center; z-index: 9999;
-        }
-        .login-box {
-            background: var(--card); padding: 40px; border-radius: 15px;
-            border: 1px solid var(--accent); width: 100%; max-width: 380px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.7); text-align: center;
-        }
-
-        /* MAIN APP */
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; }
+        #login-screen { position: fixed; inset: 0; background: #0f1416; display: flex; align-items: center; justify-content: center; z-index: 10000; }
+        .login-box { background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--accent); width: 350px; text-align: center; }
         #main-wrapper { display: none; }
-        .sidebar { background: var(--card); border-right: 1px solid #333; width: 250px; height: 100vh; position: fixed; padding: 20px 15px; }
-        .main-view { margin-left: 250px; padding: 30px; width: calc(100% - 250px); min-height: 100vh; }
-        .nav-link { color: #95a5a6; padding: 12px; margin-bottom: 8px; border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: 500; display: block; text-decoration: none; }
+        .sidebar { background: var(--card); width: 250px; height: 100vh; position: fixed; padding: 20px; border-right: 1px solid #333; }
+        .main-view { margin-left: 250px; padding: 30px; }
+        .nav-link { color: #95a5a6; padding: 10px; margin-bottom: 5px; border-radius: 5px; cursor: pointer; display: block; text-decoration: none; }
         .nav-link:hover, .nav-link.active { background: var(--accent); color: white; }
-        .module-page { display: none; background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #444; animation: fadeIn 0.3s ease; }
+        .module-page { display: none; background: var(--card); padding: 25px; border-radius: 12px; border: 1px solid #444; }
         .module-page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .field-wrapper { display: none; margin-bottom: 15px; }
-        .form-label { font-size: 12px; color: var(--accent); font-weight: bold; margin-bottom: 5px; }
-        .form-control { background: #263238; border: 1px solid #37474f; color: white; font-size: 14px; }
-        .form-control:focus { border-color: var(--accent); background: #37474f; color: white; box-shadow: none; }
-        .section-header { color: var(--green); border-bottom: 1px solid #37474f; padding-bottom: 5px; margin: 20px 0 15px 0; font-weight: bold; font-size: 14px; text-transform: uppercase; }
+        .field-wrapper { display: none; margin-bottom: 12px; }
+        .form-label { font-size: 11px; color: var(--accent); font-weight: bold; text-transform: uppercase; }
+        .form-control { background: #263238; border: 1px solid #37474f; color: white; }
+        .section-header { color: var(--green); border-bottom: 1px solid #37474f; padding-bottom: 5px; margin: 15px 0; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div id="login-screen">
     <div class="login-box">
-        <h4 class="text-warning mb-4">HỆ THỐNG NGHIỆP VỤ BMK</h4>
-        <input type="text" id="user" class="form-control mb-3 p-3" placeholder="Tên đăng nhập...">
-        <input type="password" id="pass" class="form-control mb-4 p-3" placeholder="Mật khẩu...">
-        <button onclick="checkLogin()" class="btn btn-primary w-100 fw-bold p-2" id="btnLogin">ĐĂNG NHẬP</button>
-        <p id="login-err" class="text-danger mt-3" style="display:none; font-size: 14px;">Thông tin không chính xác!</p>
+        <h4 class="text-warning mb-4">BMK CENTER LOGIN</h4>
+        <input type="text" id="user" class="form-control mb-3" placeholder="Tài khoản">
+        <input type="password" id="pass" class="form-control mb-4" placeholder="Mật khẩu">
+        <button onclick="checkLogin()" class="btn btn-primary w-100 fw-bold">ĐĂNG NHẬP</button>
+        <div id="login-err" class="text-danger mt-2" style="display:none">Sai thông tin!</div>
     </div>
 </div>
 
 <div id="main-wrapper">
     <div class="sidebar">
-        <h4 class="text-center text-warning mb-4">BMK CENTER</h4>
-        <div class="nav flex-column">
-            <a class="nav-link active" onclick="switchTab('home')">🏠 TRANG CHỦ</a>
-            <a class="nav-link" onclick="switchTab('ghep-anh')">🖼️ GHÉP ẢNH</a>
-            <a class="nav-link" onclick="switchTab('data-form', 'LẬP HỒ SƠ', 'Laphs.xlsm')">📝 LẬP HỒ SƠ</a>
-            <a class="nav-link" onclick="switchTab('data-form', 'CHUYỂN TRẠI', 'Chuyentrai.xlsm')">🚚 CHUYỂN TRẠI</a>
-            <a class="nav-link" onclick="switchTab('data-form', 'THI HÀNH ÁN', 'THA.xlsm')">⚖️ THI HÀNH ÁN</a>
-        </div>
+        <h5 class="text-warning mb-4">BMK CENTER</h5>
+        <a class="nav-link active" onclick="switchTab('home')">🏠 TRANG CHỦ</a>
+        <a class="nav-link" onclick="switchTab('ghep-anh')">🖼️ GHÉP ẢNH</a>
+        <a class="nav-link" onclick="switchTab('data-form', 'LẬP HỒ SƠ', 'Laphs.xlsm')">📝 LẬP HỒ SƠ</a>
+        <a class="nav-link" onclick="switchTab('data-form', 'CHUYỂN TRẠI', 'Chuyentrai.xlsm')">🚚 CHUYỂN TRẠI</a>
+        <a class="nav-link" onclick="switchTab('data-form', 'THI HÀNH ÁN', 'THA.xlsm')">⚖️ THI HÀNH ÁN</a>
     </div>
 
     <div class="main-view">
-        <div id="home" class="module-page active">
-            <h3>XIN CHÀO!</h3><hr>
-            <p>Vui lòng chọn chức năng ở menu bên trái để bắt đầu làm việc.</p>
-        </div>
+        <div id="home" class="module-page active"><h3>HỆ THỐNG SẴN SÀNG</h3><hr><p>Chọn nghiệp vụ để bắt đầu.</p></div>
 
         <div id="ghep-anh" class="module-page">
-            <h4>🖼️ PHẦN MỀM GHÉP ẢNH DCB 3.0</h4>
-            <div class="row mt-3">
+            <h4>🖼️ GHÉP ẢNH DCB</h4>
+            <div class="row">
                 <div class="col-md-5">
-                    <label class="form-label">Chọn ảnh 1</label><input type="file" id="f1" class="form-control mb-2">
-                    <label class="form-label">Chọn ảnh 2</label><input type="file" id="f2" class="form-control mb-2">
-                    <label class="form-label">Chọn ảnh 3</label><input type="file" id="f3" class="form-control mb-3">
-                    <label class="form-label">Nội dung in (Số hiệu - Họ tên)</label>
-                    <input type="text" id="ga-txt" class="form-control mb-4">
+                    <label class="form-label">Ảnh 1, 2, 3</label>
+                    <input type="file" id="f1" class="form-control mb-1"><input type="file" id="f2" class="form-control mb-1"><input type="file" id="f3" class="form-control mb-2">
+                    <label class="form-label">Nội dung in</label><input type="text" id="ga-txt" class="form-control mb-3">
                     <button onclick="doGhepAnh()" class="btn btn-primary w-100 mb-2">TẠO ẢNH</button>
-                    <button onclick="saveImage()" class="btn btn-success w-100">💾 LƯU ẢNH</button>
+                    <button onclick="saveImage()" class="btn btn-success w-100">LƯU ẢNH</button>
                 </div>
-                <div class="col-md-7 text-center">
-                    <canvas id="canvas" style="display:none"></canvas>
-                    <img id="preview-img" src="" style="max-width:100%; border:1px solid #444; border-radius:5px;">
-                </div>
+                <div class="col-md-7 text-center"><canvas id="canvas" style="display:none"></canvas><img id="preview-img" style="max-width:100%;"></div>
             </div>
         </div>
 
         <div id="data-form" class="module-page">
             <h4 id="form-title">NHẬP THÔNG TIN</h4>
-            <div class="row g-2 mt-3">
-                <div class="section-header">Thông tin định danh</div>
+            <div class="row g-2">
+                <div class="section-header">Thông tin chính thức</div>
                 <div class="col-md-4 field-wrapper" id="w-b7"><label class="form-label">Họ và tên</label><input type="text" id="b7" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-c8"><label class="form-label">Tên gọi khác</label><input type="text" id="c8" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-c9"><label class="form-label">Ngày tháng năm sinh</label><input type="text" id="c9" class="form-control"></div>
@@ -97,8 +74,6 @@
                 <div class="col-md-4 field-wrapper" id="w-c12"><label class="form-label">Dân tộc</label><input type="text" id="c12" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-e12"><label class="form-label">Số hiệu đối tượng</label><input type="text" id="e12" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-c4"><label class="form-label">C4</label><input type="text" id="c4" class="form-control"></div>
-
-                <div class="section-header">Thông tin pháp lý</div>
                 <div class="col-md-12 field-wrapper" id="w-c13"><label class="form-label">Hành vi phạm tội</label><input type="text" id="c13" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-e9"><label class="form-label">Mức án</label><input type="text" id="e9" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-c14"><label class="form-label">Bắt ngày</label><input type="text" id="c14" class="form-control"></div>
@@ -106,8 +81,8 @@
                 <div class="col-md-6 field-wrapper" id="w-c16"><label class="form-label">Cơ quan ra lệnh</label><input type="text" id="c16" class="form-control"></div>
                 <div class="col-md-6 field-wrapper" id="w-d25"><label class="form-label">D25</label><input type="text" id="d25" class="form-control"></div>
                 <div class="col-md-12 field-wrapper" id="w-c18"><label class="form-label">C18</label><input type="text" id="c18" class="form-control"></div>
-
-                <div class="section-header">Các trường bổ sung (Khớp Tool cũ)</div>
+                
+                <div class="section-header">Các ô phụ (Khớp Tool AutoIt)</div>
                 <div class="col-md-2 field-wrapper" id="w-b19"><label class="form-label">B19</label><input type="text" id="b19" class="form-control"></div>
                 <div class="col-md-2 field-wrapper" id="w-c19"><label class="form-label">C19</label><input type="text" id="c19" class="form-control"></div>
                 <div class="col-md-2 field-wrapper" id="w-d19"><label class="form-label">D19</label><input type="text" id="d19" class="form-control"></div>
@@ -123,40 +98,23 @@
                 <div class="col-md-6 field-wrapper" id="w-f22"><label class="form-label">F22</label><input type="text" id="f22" class="form-control"></div>
 
                 <div class="col-md-12 mt-4">
-                    <button onclick="processExcel()" class="btn btn-info w-100 fw-bold p-3" id="btnExport">XUẤT FILE EXCEL NGHIỆP VỤ</button>
+                    <button onclick="processExcel()" class="btn btn-info w-100 fw-bold p-3" id="btnExport">XUẤT FILE EXCEL KẾT QUẢ</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
 <script>
-    // 1. KIỂM TRA ĐĂNG NHẬP
     function checkLogin() {
-        const u = document.getElementById('user').value;
-        const p = document.getElementById('pass').value;
-        if(u === "quangninh" && p === "113113@") {
+        if(document.getElementById('user').value === "quangninh" && document.getElementById('pass').value === "113113@") {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-wrapper').style.display = 'block';
         } else {
-            const err = document.getElementById('login-err');
-            err.style.display = 'block';
-            setTimeout(() => { err.style.display = 'none'; }, 3000);
+            alert("Sai tài khoản hoặc mật khẩu!");
         }
     }
 
-    // Nhấn Enter để đăng nhập
-    document.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            if (document.getElementById('login-screen').style.display !== 'none') {
-                checkLogin();
-            }
-        }
-    });
-
-    // 2. LOGIC MODULES
     const configs = {
         'LẬP HỒ SƠ': ['b7','c8','c9','b11','c12','e9','c4','c13','c14','c15','c18','e20','f20','g20','e22','f22'],
         'CHUYỂN TRẠI': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','b19','c19','d19','e19','f19','g19','e21','g21'],
@@ -169,18 +127,50 @@
         document.getElementById(id).classList.add('active');
         if(id === 'data-form') {
             curMod = modName; curTpl = tplName;
-            document.getElementById('form-title').innerText = "NHẬP: " + modName;
+            document.getElementById('form-title').innerText = "ĐANG NHẬP: " + modName;
             document.querySelectorAll('.field-wrapper').forEach(w => w.style.display = 'none');
             configs[modName].forEach(fId => { document.getElementById('w-' + fId).style.display = 'block'; });
         }
     }
 
-    // 3. GHÉP ẢNH
+    async function processExcel() {
+        const btn = document.getElementById('btnExport');
+        btn.innerText = "ĐANG XỬ LÝ...";
+        try {
+            // Lấy file mẫu từ thư mục hiện tại
+            const response = await fetch(curTpl);
+            if (!response.ok) throw new Error("Không thể đọc file mẫu. Hãy đảm bảo bạn đã upload file .xlsm lên cùng GitHub.");
+            
+            const data = await response.arrayBuffer();
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+            // Map dữ liệu
+            const map = { 'B7':'b7','C8':'c8','C9':'c9','B11':'b11','C11':'b11','C12':'c12','E12':'e12','C4':'c4','C13':'c13','E9':'e9','C14':'c14','C15':'c15','C16':'c16','D25':'d25','C18':'c18','B19':'b19','C19':'c19','D19':'d19','E19':'e19','F19':'f19','G19':'g19','E20':'e20','F20':'f20','G20':'g20','E21':'e21','G21':'g21','E22':'e22','F22':'f22' };
+            
+            for (let cell in map) {
+                const value = document.getElementById(map[cell])?.value;
+                if (value) {
+                    if (!sheet[cell]) sheet[cell] = { t: 's' };
+                    sheet[cell].v = value;
+                }
+            }
+
+            // Xuất file mới
+            const outName = curMod + "_" + (document.getElementById('b7').value || "KetQua") + ".xlsx";
+            XLSX.writeFile(workbook, outName);
+        } catch (err) {
+            alert(err.message + "\n\nLưu ý: Nếu chạy trên máy tính (không qua GitHub/Web Server), trình duyệt sẽ chặn việc đọc file mẫu.");
+        } finally {
+            btn.innerText = "XUẤT FILE EXCEL KẾT QUẢ";
+        }
+    }
+
     async function doGhepAnh() {
         const can = document.getElementById('canvas'), ctx = can.getContext('2d');
         const txt = document.getElementById('ga-txt').value;
         const f = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
-        if (!f[0].files[0] || !f[1].files[0] || !f[2].files[0]) return alert("Vui lòng chọn đủ 3 ảnh!");
+        if (!f[0].files[0] || !f[1].files[0] || !f[2].files[0]) return alert("Chọn 3 ảnh!");
         can.width = 1181; can.height = 1772; ctx.fillStyle = "white"; ctx.fillRect(0,0,1181,1772);
         const imgs = await Promise.all(f.map(i => new Promise(res => {
             const r = new FileReader(); r.onload = e => { const img = new Image(); img.onload = () => res(img); img.src = e.target.result; }; r.readAsDataURL(i.files[0]);
@@ -194,30 +184,9 @@
         }
         document.getElementById('preview-img').src = can.toDataURL('image/jpeg', 0.9);
     }
-
     function saveImage() {
-        const src = document.getElementById('preview-img').src;
-        if(!src) return alert("Vui lòng tạo ảnh trước!");
-        const a = document.createElement('a'); a.href = src; a.download = (document.getElementById('ga-txt').value || "KetQua") + ".jpg"; a.click();
-    }
-
-    // 4. XUẤT EXCEL
-    async function processExcel() {
-        if(!curTpl) return;
-        const btn = document.getElementById('btnExport'); btn.innerText = "ĐANG XỬ LÝ...";
-        try {
-            const res = await fetch(curTpl);
-            const ab = await res.arrayBuffer();
-            const wb = XLSX.read(new Uint8Array(ab), {type: 'array'});
-            const ws = wb.Sheets[wb.SheetNames[0]];
-            const map = { 'B7':'b7','C8':'c8','C9':'c9','B11':'b11','C11':'b11','C12':'c12','E12':'e12','C4':'c4','C13':'c13','E9':'e9','C14':'c14','C15':'c15','C16':'c16','D25':'d25','C18':'c18','B19':'b19','C19':'c19','D19':'d19','E19':'e19','F19':'f19','G19':'g19','E20':'e20','F20':'f20','G20':'g20','E21':'e21','G21':'g21','E22':'e22','F22':'f22' };
-            for(let cell in map) {
-                const val = document.getElementById(map[cell])?.value;
-                if(val) { if(!ws[cell]) ws[cell] = { t: 's' }; ws[cell].v = val; }
-            }
-            XLSX.writeFile(wb, curMod + "_" + (document.getElementById('b7').value || "DoiTuong") + ".xlsx");
-        } catch (e) { alert("Lỗi: Hãy chắc chắn bạn đã tải các file .xlsm lên cùng thư mục GitHub!"); }
-        finally { btn.innerText = "XUẤT FILE EXCEL NGHIỆP VỤ"; }
+        const a = document.createElement('a'); a.href = document.getElementById('preview-img').src; 
+        a.download = (document.getElementById('ga-txt').value || "AnhGhep") + ".jpg"; a.click();
     }
 </script>
 </body>
