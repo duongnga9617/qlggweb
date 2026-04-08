@@ -17,7 +17,7 @@
             margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }
 
-        /* --- LOGIN FIX --- */
+        /* --- LOGIN BOX --- */
         #login-box {
             background: var(--panel); padding: 40px; border-radius: 20px;
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); width: 360px;
@@ -40,7 +40,7 @@
         .btn-primary { background: var(--primary); color: white; margin-top: 10px; }
         .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* --- APP INTERFACE FIX --- */
+        /* --- APP INTERFACE --- */
         #main-app {
             display: none; width: 95%; max-width: 900px; background: var(--panel);
             border-radius: 20px; border: 1px solid var(--border); overflow: hidden;
@@ -66,7 +66,6 @@
             padding: 20px; border-radius: 15px; margin-bottom: 20px;
         }
 
-        /* FIX: File display row */
         .file-row {
             display: grid; grid-template-columns: 140px 1fr; align-items: center;
             gap: 15px; margin-bottom: 12px;
@@ -96,19 +95,19 @@
 
     <div id="login-box">
         <h1 style="color:var(--primary); margin:0; font-size: 28px;">BMK</h1>
-        <p style="color:var(--subtext); margin-bottom: 30px;">Hệ Thống Xử Lý Ảnh DCB</p>
+        <p style="color:var(--subtext); margin-bottom: 30px;">Hệ Thống Xử Lý Ảnh</p>
         
         <div class="input-group">
             <label>Tài khoản</label>
-            <input type="text" id="username" class="input-field" placeholder="quangninh">
+            <input type="text" id="username" class="input-field" placeholder="Nhập tài khoản của bạn">
         </div>
         <div class="input-group">
             <label>Mật khẩu</label>
-            <input type="password" id="password" class="input-field" placeholder="113113@">
+            <input type="password" id="password" class="input-field" placeholder="Nhập mật khẩu">
         </div>
         
-        <button type="button" class="btn-main btn-primary" onclick="doLogin()">ĐĂNG NHẬP NGAY</button>
-        <p id="err" style="color:var(--danger); font-size:13px; display:none; margin-top:15px;">Thông tin không chính xác!</p>
+        <button type="button" class="btn-main btn-primary" onclick="doLogin()">ĐĂNG NHẬP</button>
+        <p id="err" style="color:var(--danger); font-size:13px; display:none; margin-top:15px;">Tài khoản hoặc mật khẩu không chính xác!</p>
     </div>
 
     <div id="main-app">
@@ -118,7 +117,7 @@
         </div>
 
         <div class="nav-tabs">
-            <button class="tab active" onclick="tab(0)">GHÉP 3 TẤM</button>
+            <button class="tab active" onclick="tab(0)">TẠO ẢNH DCB</button>
             <button class="tab" onclick="tab(1)">TẠO ẢNH THẺ</button>
         </div>
 
@@ -145,7 +144,7 @@
                     <label style="font-size:12px; color:var(--accent); font-weight:800;">THÔNG TIN IN (SỐ + TÊN)</label>
                     <input type="text" id="info" class="input-field" style="margin-top:8px;" placeholder="Ví dụ: 01 NGUYỄN VĂN A">
                 </div>
-                <button class="btn-main btn-primary" onclick="runBMK()">XUẤT FILE GHÉP (10x15)</button>
+                <button class="btn-main btn-primary" onclick="runBMK()">XUẤT FILE </button>
             </div>
 
             <div id="t1" style="display:none">
@@ -169,10 +168,11 @@
     <canvas id="cv"></canvas>
 
     <script>
-        // --- LOGIN ---
+        // Các thông tin tài khoản vẫn được kiểm tra ngầm, nhưng không hiển thị lên giao diện nhập liệu
         function doLogin() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
+            // Tài khoản/Mật khẩu vẫn là quangninh / 113113@
             if(u === "quangninh" && p === "113113@") {
                 document.getElementById('login-box').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
@@ -181,7 +181,6 @@
             }
         }
 
-        // --- UI UI ---
         function tab(i) {
             document.querySelectorAll('.tab').forEach((b,idx)=> b.classList.toggle('active', idx===i));
             document.getElementById('t0').style.display = i===0 ? 'block' : 'none';
@@ -197,7 +196,6 @@
             }
         }
 
-        // --- LOGIC XỬ LÝ ẢNH ---
         function loadImg(f) {
             return new Promise(r => {
                 const i = new Image();
