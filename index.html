@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMK CENTER - HỆ THỐNG NGHIỆP VỤ</title>
+    <title>BMK CENTER - QUẢN LÝ TỔNG HỢP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root { --bg: #0f1416; --card: #1c252a; --text: #e1e8eb; --accent: #00a8ff; --green: #2ecc71; }
         body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; }
         
-        /* MÀN HÌNH ĐĂNG NHẬP */
+        /* LOGIN SCREEN */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, #1c252a 0%, #0f1416 100%);
@@ -17,11 +17,11 @@
         }
         .login-box {
             background: var(--card); padding: 40px; border-radius: 15px;
-            border: 1px solid var(--accent); width: 100%; max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;
+            border: 1px solid var(--accent); width: 100%; max-width: 380px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.7); text-align: center;
         }
 
-        /* GIAO DIỆN CHÍNH (ẨN KHI CHƯA ĐĂNG NHẬP) */
+        /* MAIN APP */
         #main-wrapper { display: none; }
         .sidebar { background: var(--card); border-right: 1px solid #333; width: 250px; height: 100vh; position: fixed; padding: 20px 15px; }
         .main-view { margin-left: 250px; padding: 30px; width: calc(100% - 250px); min-height: 100vh; }
@@ -30,21 +30,22 @@
         .module-page { display: none; background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #444; animation: fadeIn 0.3s ease; }
         .module-page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .field-wrapper { display: none; margin-bottom: 12px; }
-        .form-label { font-size: 11px; color: var(--accent); font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
+        .field-wrapper { display: none; margin-bottom: 15px; }
+        .form-label { font-size: 12px; color: var(--accent); font-weight: bold; margin-bottom: 5px; }
         .form-control { background: #263238; border: 1px solid #37474f; color: white; font-size: 14px; }
-        .section-header { color: var(--green); border-bottom: 1px solid #37474f; padding-bottom: 5px; margin: 20px 0 10px 0; font-weight: bold; font-size: 13px; }
+        .form-control:focus { border-color: var(--accent); background: #37474f; color: white; box-shadow: none; }
+        .section-header { color: var(--green); border-bottom: 1px solid #37474f; padding-bottom: 5px; margin: 20px 0 15px 0; font-weight: bold; font-size: 14px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
 <div id="login-screen">
     <div class="login-box">
-        <h3 class="text-warning mb-4">BMK CENTER LOGIN</h3>
-        <input type="text" id="user" class="form-control mb-3 p-3" placeholder="Tài khoản">
-        <input type="password" id="pass" class="form-control mb-4 p-3" placeholder="Mật khẩu">
-        <button onclick="checkLogin()" class="btn btn-primary w-100 fw-bold p-2">ĐĂNG NHẬP HỆ THỐNG</button>
-        <p id="login-err" class="text-danger mt-3" style="display:none">Sai tài khoản hoặc mật khẩu!</p>
+        <h4 class="text-warning mb-4">HỆ THỐNG NGHIỆP VỤ BMK</h4>
+        <input type="text" id="user" class="form-control mb-3 p-3" placeholder="Tên đăng nhập...">
+        <input type="password" id="pass" class="form-control mb-4 p-3" placeholder="Mật khẩu...">
+        <button onclick="checkLogin()" class="btn btn-primary w-100 fw-bold p-2" id="btnLogin">ĐĂNG NHẬP</button>
+        <p id="login-err" class="text-danger mt-3" style="display:none; font-size: 14px;">Thông tin không chính xác!</p>
     </div>
 </div>
 
@@ -62,11 +63,12 @@
 
     <div class="main-view">
         <div id="home" class="module-page active">
-            <h3>XIN CHÀO!</h3><hr><p>Hệ thống đã sẵn sàng với đầy đủ nhãn thông tin khớp 100% bản cũ.</p>
+            <h3>XIN CHÀO!</h3><hr>
+            <p>Vui lòng chọn chức năng ở menu bên trái để bắt đầu làm việc.</p>
         </div>
 
         <div id="ghep-anh" class="module-page">
-            <h4>🖼️ GHÉP ẢNH DCB - BMK 3.0</h4>
+            <h4>🖼️ PHẦN MỀM GHÉP ẢNH DCB 3.0</h4>
             <div class="row mt-3">
                 <div class="col-md-5">
                     <label class="form-label">Chọn ảnh 1</label><input type="file" id="f1" class="form-control mb-2">
@@ -79,7 +81,7 @@
                 </div>
                 <div class="col-md-7 text-center">
                     <canvas id="canvas" style="display:none"></canvas>
-                    <img id="preview-img" src="" style="max-width:100%; border-radius:8px;">
+                    <img id="preview-img" src="" style="max-width:100%; border:1px solid #444; border-radius:5px;">
                 </div>
             </div>
         </div>
@@ -87,7 +89,7 @@
         <div id="data-form" class="module-page">
             <h4 id="form-title">NHẬP THÔNG TIN</h4>
             <div class="row g-2 mt-3">
-                <div class="section-header">Thông tin nghiệp vụ</div>
+                <div class="section-header">Thông tin định danh</div>
                 <div class="col-md-4 field-wrapper" id="w-b7"><label class="form-label">Họ và tên</label><input type="text" id="b7" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-c8"><label class="form-label">Tên gọi khác</label><input type="text" id="c8" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-c9"><label class="form-label">Ngày tháng năm sinh</label><input type="text" id="c9" class="form-control"></div>
@@ -95,5 +97,104 @@
                 <div class="col-md-4 field-wrapper" id="w-c12"><label class="form-label">Dân tộc</label><input type="text" id="c12" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-e12"><label class="form-label">Số hiệu đối tượng</label><input type="text" id="e12" class="form-control"></div>
                 <div class="col-md-4 field-wrapper" id="w-c4"><label class="form-label">C4</label><input type="text" id="c4" class="form-control"></div>
+
+                <div class="section-header">Thông tin pháp lý</div>
                 <div class="col-md-12 field-wrapper" id="w-c13"><label class="form-label">Hành vi phạm tội</label><input type="text" id="c13" class="form-control"></div>
-                <div class="col-md-4 field-wrapper" id="w-e9"><label class="form-label">Mức án
+                <div class="col-md-4 field-wrapper" id="w-e9"><label class="form-label">Mức án</label><input type="text" id="e9" class="form-control"></div>
+                <div class="col-md-4 field-wrapper" id="w-c14"><label class="form-label">Bắt ngày</label><input type="text" id="c14" class="form-control"></div>
+                <div class="col-md-4 field-wrapper" id="w-c15"><label class="form-label">Số hiệu Lệnh/QĐ</label><input type="text" id="c15" class="form-control"></div>
+                <div class="col-md-6 field-wrapper" id="w-c16"><label class="form-label">Cơ quan ra lệnh</label><input type="text" id="c16" class="form-control"></div>
+                <div class="col-md-6 field-wrapper" id="w-d25"><label class="form-label">D25</label><input type="text" id="d25" class="form-control"></div>
+                <div class="col-md-12 field-wrapper" id="w-c18"><label class="form-label">C18</label><input type="text" id="c18" class="form-control"></div>
+
+                <div class="section-header">Các trường bổ sung (Khớp Tool cũ)</div>
+                <div class="col-md-2 field-wrapper" id="w-b19"><label class="form-label">B19</label><input type="text" id="b19" class="form-control"></div>
+                <div class="col-md-2 field-wrapper" id="w-c19"><label class="form-label">C19</label><input type="text" id="c19" class="form-control"></div>
+                <div class="col-md-2 field-wrapper" id="w-d19"><label class="form-label">D19</label><input type="text" id="d19" class="form-control"></div>
+                <div class="col-md-2 field-wrapper" id="w-e19"><label class="form-label">E19</label><input type="text" id="e19" class="form-control"></div>
+                <div class="col-md-2 field-wrapper" id="w-f19"><label class="form-label">F19</label><input type="text" id="f19" class="form-control"></div>
+                <div class="col-md-2 field-wrapper" id="w-g19"><label class="form-label">G19</label><input type="text" id="g19" class="form-control"></div>
+                <div class="col-md-4 field-wrapper" id="w-e20"><label class="form-label">E20</label><input type="text" id="e20" class="form-control"></div>
+                <div class="col-md-4 field-wrapper" id="w-f20"><label class="form-label">F20</label><input type="text" id="f20" class="form-control"></div>
+                <div class="col-md-4 field-wrapper" id="w-g20"><label class="form-label">G20</label><input type="text" id="g20" class="form-control"></div>
+                <div class="col-md-6 field-wrapper" id="w-e21"><label class="form-label">E21</label><input type="text" id="e21" class="form-control"></div>
+                <div class="col-md-6 field-wrapper" id="w-g21"><label class="form-label">G21</label><input type="text" id="g21" class="form-control"></div>
+                <div class="col-md-6 field-wrapper" id="w-e22"><label class="form-label">E22</label><input type="text" id="e22" class="form-control"></div>
+                <div class="col-md-6 field-wrapper" id="w-f22"><label class="form-label">F22</label><input type="text" id="f22" class="form-control"></div>
+
+                <div class="col-md-12 mt-4">
+                    <button onclick="processExcel()" class="btn btn-info w-100 fw-bold p-3" id="btnExport">XUẤT FILE EXCEL NGHIỆP VỤ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script>
+    // 1. KIỂM TRA ĐĂNG NHẬP
+    function checkLogin() {
+        const u = document.getElementById('user').value;
+        const p = document.getElementById('pass').value;
+        if(u === "quangninh" && p === "113113@") {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-wrapper').style.display = 'block';
+        } else {
+            const err = document.getElementById('login-err');
+            err.style.display = 'block';
+            setTimeout(() => { err.style.display = 'none'; }, 3000);
+        }
+    }
+
+    // Nhấn Enter để đăng nhập
+    document.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            if (document.getElementById('login-screen').style.display !== 'none') {
+                checkLogin();
+            }
+        }
+    });
+
+    // 2. LOGIC MODULES
+    const configs = {
+        'LẬP HỒ SƠ': ['b7','c8','c9','b11','c12','e9','c4','c13','c14','c15','c18','e20','f20','g20','e22','f22'],
+        'CHUYỂN TRẠI': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','b19','c19','d19','e19','f19','g19','e21','g21'],
+        'THI HÀNH ÁN': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','d25','b19','c19','d19','e19','f19','g19']
+    };
+    let curMod = "", curTpl = "";
+
+    function switchTab(id, modName, tplName) {
+        document.querySelectorAll('.module-page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if(id === 'data-form') {
+            curMod = modName; curTpl = tplName;
+            document.getElementById('form-title').innerText = "NHẬP: " + modName;
+            document.querySelectorAll('.field-wrapper').forEach(w => w.style.display = 'none');
+            configs[modName].forEach(fId => { document.getElementById('w-' + fId).style.display = 'block'; });
+        }
+    }
+
+    // 3. GHÉP ẢNH
+    async function doGhepAnh() {
+        const can = document.getElementById('canvas'), ctx = can.getContext('2d');
+        const txt = document.getElementById('ga-txt').value;
+        const f = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
+        if (!f[0].files[0] || !f[1].files[0] || !f[2].files[0]) return alert("Vui lòng chọn đủ 3 ảnh!");
+        can.width = 1181; can.height = 1772; ctx.fillStyle = "white"; ctx.fillRect(0,0,1181,1772);
+        const imgs = await Promise.all(f.map(i => new Promise(res => {
+            const r = new FileReader(); r.onload = e => { const img = new Image(); img.onload = () => res(img); img.src = e.target.result; }; r.readAsDataURL(i.files[0]);
+        })));
+        const bw = 886, bh = 378, x = (1181-bw)/2, gap = (1772-4*bh)/5;
+        for(let i=0; i<4; i++){
+            let y = gap + i*(bh+gap);
+            ctx.drawImage(imgs[0], x, y, bw/3, bh); ctx.drawImage(imgs[1], x+bw/3, y, bw/3, bh); ctx.drawImage(imgs[2], x+2*bw/3, y, bw/3, bh);
+            ctx.fillStyle = "yellow"; ctx.fillRect(x+bw/3, y+bh-70, bw/3, 45);
+            ctx.fillStyle = "black"; ctx.font = "bold 26px Arial"; ctx.textAlign = "center"; ctx.fillText(txt, 1181/2, y+bh-38);
+        }
+        document.getElementById('preview-img').src = can.toDataURL('image/jpeg', 0.9);
+    }
+
+    function saveImage() {
+        const src = document.getElementById('preview-img').src;
+        if(!src
