@@ -38,22 +38,20 @@
 
 <div class="main-view">
     <div id="home" class="module-page active">
-        <h2>SẴN SÀNG LÀM VIỆC</h2>
+        <h2>HỆ THỐNG QUẢN LÝ NGHIỆP VỤ</h2>
         <hr>
-        <p>Tính năng lưu ảnh đã được cập nhật tự động đặt tên theo nội dung in.</p>
-        <p>Các file Excel mẫu đã được tích hợp ngầm, không cần chọn file khi xuất.</p>
+        <p>Tên các trường thông tin đã được đồng bộ 100% </p>
     </div>
 
     <div id="ghep-anh" class="module-page">
-        <h4>🖼️ CÔNG CỤ GHÉP ẢNH TỰ ĐỘNG</h4>
+        <h4>🖼️ PHẦN MỀM GHÉP ẢNH DCB - BMK 3.0</h4>
         <div class="row mt-3">
             <div class="col-md-5">
-                <label class="form-label">Ảnh thành phần</label>
-                <input type="file" id="f1" class="form-control mb-2" accept="image/*">
-                <input type="file" id="f2" class="form-control mb-2" accept="image/*">
-                <input type="file" id="f3" class="form-control mb-3" accept="image/*">
-                <label class="form-label">Nội dung in (Tên này sẽ là tên file khi lưu)</label>
-                <input type="text" id="ga-txt" class="form-control mb-4" placeholder="VD: 1234 - NGUYỄN VĂN A">
+                <label class="form-label">Chọn ảnh thứ nhất</label><input type="file" id="f1" class="form-control mb-2" accept="image/*">
+                <label class="form-label">Chọn ảnh thứ hai</label><input type="file" id="f2" class="form-control mb-2" accept="image/*">
+                <label class="form-label">Chọn ảnh thứ ba</label><input type="file" id="f3" class="form-control mb-3" accept="image/*">
+                <label class="form-label">Nội dung in (Số hiệu - Họ tên)</label>
+                <input type="text" id="ga-txt" class="form-control mb-4" placeholder="Ví dụ: 1234 - NGUYỄN VĂN A">
                 <button onclick="doGhepAnh()" class="btn btn-primary w-100 mb-2 fw-bold">TẠO ẢNH</button>
                 <button onclick="saveImage()" class="btn btn-success w-100 fw-bold">💾 LƯU ẢNH VỀ MÁY</button>
             </div>
@@ -65,154 +63,22 @@
     </div>
 
     <div id="data-form" class="module-page">
-        <h4 id="form-title">NHẬP LIỆU</h4>
+        <h4 id="form-title">NHẬP THÔNG TIN ĐỐI TƯỢNG</h4>
         <div class="row g-2 mt-3">
-            <div class="section-header">Thông tin cơ bản</div>
+            <div class="section-header">Thông tin định danh</div>
             <div class="col-md-4 field-wrapper" id="w-b7"><label class="form-label">Họ và tên</label><input type="text" id="b7" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c8"><label class="form-label">Tên gọi khác</label><input type="text" id="c8" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-c9"><label class="form-label">Ngày sinh</label><input type="text" id="c9" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c9"><label class="form-label">Ngày tháng năm sinh</label><input type="text" id="c9" class="form-control"></div>
             <div class="col-md-8 field-wrapper" id="w-b11"><label class="form-label">Đăng ký HKTT</label><input type="text" id="b11" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c12"><label class="form-label">Dân tộc</label><input type="text" id="c12" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-e9"><label class="form-label">Mức án</label><input type="text" id="e9" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-e12"><label class="form-label">Số hiệu</label><input type="text" id="e12" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-c4"><label class="form-label">Dòng C4</label><input type="text" id="c4" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-e12"><label class="form-label">Số hiệu đối tượng</label><input type="text" id="e12" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-c4"><label class="form-label">Tiêu đề (C4)</label><input type="text" id="c4" class="form-control"></div>
 
-            <div class="section-header">Chi tiết vụ án</div>
+            <div class="section-header">Thông tin pháp lý</div>
             <div class="col-md-12 field-wrapper" id="w-c13"><label class="form-label">Hành vi phạm tội</label><input type="text" id="c13" class="form-control"></div>
+            <div class="col-md-4 field-wrapper" id="w-e9"><label class="form-label">Mức án</label><input type="text" id="e9" class="form-control"></div>
             <div class="col-md-4 field-wrapper" id="w-c14"><label class="form-label">Bắt ngày</label><input type="text" id="c14" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-c15"><label class="form-label">Số lệnh/QĐ</label><input type="text" id="c15" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-c16"><label class="form-label">Cơ quan ra lệnh</label><input type="text" id="c16" class="form-control"></div>
-            <div class="col-md-6 field-wrapper" id="w-d25"><label class="form-label">QĐ Thi hành án</label><input type="text" id="d25" class="form-control"></div>
-            <div class="col-md-6 field-wrapper" id="w-c18"><label class="form-label">Dòng C18</label><input type="text" id="c18" class="form-control"></div>
-
-            <div class="section-header">Thông tin bổ sung</div>
-            <div class="col-md-2 field-wrapper" id="w-b19"><label class="form-label">B19</label><input type="text" id="b19" class="form-control"></div>
-            <div class="col-md-2 field-wrapper" id="w-c19"><label class="form-label">C19</label><input type="text" id="c19" class="form-control"></div>
-            <div class="col-md-2 field-wrapper" id="w-d19"><label class="form-label">D19</label><input type="text" id="d19" class="form-control"></div>
-            <div class="col-md-2 field-wrapper" id="w-e19"><label class="form-label">E19</label><input type="text" id="e19" class="form-control"></div>
-            <div class="col-md-2 field-wrapper" id="w-f19"><label class="form-label">F19</label><input type="text" id="f19" class="form-control"></div>
-            <div class="col-md-2 field-wrapper" id="w-g19"><label class="form-label">G19</label><input type="text" id="g19" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-e20"><label class="form-label">E20</label><input type="text" id="e20" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-f20"><label class="form-label">F20</label><input type="text" id="f20" class="form-control"></div>
-            <div class="col-md-4 field-wrapper" id="w-g20"><label class="form-label">G20</label><input type="text" id="g20" class="form-control"></div>
-            <div class="col-md-6 field-wrapper" id="w-e21"><label class="form-label">E21</label><input type="text" id="e21" class="form-control"></div>
-            <div class="col-md-6 field-wrapper" id="w-g21"><label class="form-label">G21</label><input type="text" id="g21" class="form-control"></div>
-            <div class="col-md-6 field-wrapper" id="w-e22"><label class="form-label">E22</label><input type="text" id="e22" class="form-control"></div>
-            <div class="col-md-6 field-wrapper" id="w-f22"><label class="form-label">F22</label><input type="text" id="f22" class="form-control"></div>
-
-            <div class="col-md-12 mt-4">
-                <button onclick="processExcel()" class="btn btn-info w-100 fw-bold p-3">XUẤT EXCEL NGAY (KHÔNG CẦN CHỌN FILE MẪU)</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
-<script>
-    const fieldConfigs = {
-        'LẬP HỒ SƠ': ['b7','c8','c9','b11','c12','e9','c4','c13','c14','c15','c18','e20','f20','g20','e22','f22'],
-        'CHUYỂN TRẠI': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','b19','c19','d19','e19','f19','g19','e21','g21'],
-        'THI HÀNH ÁN': ['b7','c8','c9','b11','c12','e9','e12','c13','c14','c15','c16','d25','b19','c19','d19','e19','f19','g19']
-    };
-
-    let currentMod = "";
-    let currentTpl = "";
-
-    function switchTab(id, modName, tplName) {
-        document.querySelectorAll('.module-page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        if(event) event.currentTarget.classList.add('active');
-
-        if(id === 'data-form') {
-            currentMod = modName;
-            currentTpl = tplName;
-            document.getElementById('form-title').innerText = modName;
-            document.querySelectorAll('.field-wrapper').forEach(w => w.style.display = 'none');
-            fieldConfigs[modName].forEach(fId => {
-                const wrap = document.getElementById('w-' + fId);
-                if(wrap) wrap.style.display = 'block';
-            });
-        }
-    }
-
-    // --- GHÉP ẢNH ---
-    async function doGhepAnh() {
-        const can = document.getElementById('canvas'), ctx = can.getContext('2d');
-        const txt = document.getElementById('ga-txt').value;
-        const f = [document.getElementById('f1'), document.getElementById('f2'), document.getElementById('f3')];
-        if (!f[0].files[0] || !f[1].files[0] || !f[2].files[0]) return alert("Hãy chọn đủ 3 ảnh!");
-
-        can.width = 1181; can.height = 1772;
-        ctx.fillStyle = "white"; ctx.fillRect(0,0,1181,1772);
-        const imgs = await Promise.all(f.map(i => new Promise(res => {
-            const r = new FileReader();
-            r.onload = e => { const img = new Image(); img.onload = () => res(img); img.src = e.target.result; };
-            r.readAsDataURL(i.files[0]);
-        })));
-
-        const bw = 886, bh = 378, x = (1181-bw)/2, gap = (1772-4*bh)/5;
-        for(let i=0; i<4; i++){
-            let y = gap + i*(bh+gap);
-            ctx.drawImage(imgs[0], x, y, bw/3, bh);
-            ctx.drawImage(imgs[1], x+bw/3, y, bw/3, bh);
-            ctx.drawImage(imgs[2], x+2*bw/3, y, bw/3, bh);
-            ctx.fillStyle = "yellow"; ctx.fillRect(x+bw/3, y+bh-70, bw/3, 45);
-            ctx.fillStyle = "black"; ctx.font = "bold 26px Arial"; ctx.textAlign = "center";
-            ctx.fillText(txt, 1181/2, y+bh-38);
-        }
-        document.getElementById('preview-img').src = can.toDataURL('image/jpeg', 0.9);
-    }
-
-    function saveImage() {
-        const src = document.getElementById('preview-img').src;
-        const fileName = document.getElementById('ga-txt').value || "Ket_Qua_Ghep_Anh";
-        if(!src) return alert("Chưa có ảnh!");
-        const a = document.createElement('a');
-        a.href = src;
-        a.download = fileName + ".jpg"; // Tên file tự động lấy từ mục nội dung in
-        a.click();
-    }
-
-    // --- XUẤT EXCEL TỰ ĐỘNG LẤY MẪU ---
-    async function processExcel() {
-        if(!currentTpl) return;
-        
-        try {
-            // Tự động tải file mẫu từ cùng thư mục web
-            const response = await fetch(currentTpl);
-            if(!response.ok) throw new Error("Không tìm thấy file mẫu: " + currentTpl);
-            const arrayBuffer = await response.arrayBuffer();
-            
-            const data = new Uint8Array(arrayBuffer);
-            const wb = XLSX.read(data, {type: 'array'});
-            const ws = wb.Sheets[wb.SheetNames[0]];
-
-            const mapping = {
-                'B7': 'b7', 'C7': 'b7', 'C8': 'c8', 'C9': 'c9', 'B11': 'b11', 'C11': 'b11',
-                'C12': 'c12', 'E9': 'e9', 'E12': 'e12', 'C4': 'c4', 'C13': 'c13', 'C14': 'c14',
-                'C15': 'c15', 'C16': 'c16', 'D25': 'd25', 'C18': 'c18', 'B19': 'b19',
-                'C19': 'c19', 'D19': 'd19', 'E19': 'e19', 'F19': 'f19', 'G19': 'g19',
-                'E20': 'e20', 'F20': 'f20', 'G20': 'g20', 'E21': 'e21', 'G21': 'g21',
-                'E22': 'e22', 'F22': 'f22'
-            };
-
-            for(let cell in mapping) {
-                const inputVal = document.getElementById(mapping[cell]).value;
-                if(inputVal) {
-                    if(!ws[cell]) ws[cell] = { t: 's' };
-                    ws[cell].v = inputVal;
-                }
-            }
-            
-            const hoTen = document.getElementById('b7').value || "KetQua";
-            XLSX.writeFile(wb, `${currentMod}_${hoTen}.xlsx`);
-            
-        } catch (error) {
-            alert("Lỗi: " + error.message + ". Hãy đảm bảo các file .xlsm mẫu nằm cùng thư mục với file index.html");
-        }
-    }
-</script>
-</body>
-</html>
+            <div class="col-md-4 field-wrapper" id="w-c15"><label class="form-label">Số hiệu Lệnh/QĐ</label><input type="text" id="c15" class="form-control"></div>
+            <div class="col-md-6 field-wrapper" id="w-c16"><label class="form-label">Cơ quan ra lệnh</label><input type="text" id="c16" class="form-control"></div>
+            <div class="col-md-6 field-wrapper" id="w-d25"><label class="form-label">Quyết định thi hành án</label><input type="text" id="d25" class="form-control"></div>
+            <div class="col-md-12 field-wrapper" id="w-c18"><label class="form-label">Thông tin kèm theo (C18)</label><input type="text" id="c18" class
